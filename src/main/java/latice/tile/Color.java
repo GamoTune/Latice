@@ -9,13 +9,15 @@ public enum Color {
 	PINK("\u001B[35m"),
 	CYAN("\u001B[36m");
 	
-	
+	// Enum constants for different colors
 	private final String code;
 
+	// Constructor to initialize the color
     Color(String code) {
         this.code = code;
     }
 
+    // Method to get the color code
     public String getCode() {
         return code;
     }

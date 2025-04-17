@@ -1,16 +1,25 @@
 package latice.application;
 
+
 public class LaticeApplicationConsole {
 
 	public static void main(String[] args) {
-		System.out.println("------------------------------------------------------");
-		System.out.println("--  Bienvenue dans notre magnifique jeu de latice ! --");
-		System.out.println("--  développé par Loïs                              --");
-		System.out.println("--  et par Malik                                    --");
-		System.out.println("--  et par Valentin                                 --");
-		System.out.println("--  et par Arthur                                   --");
-		System.out.println("------------------------------------------------------");
 
 	}
+	
+	// This class is used to print messages to the console
+    public static class Console {
+    	public static void print(String message) {
+			System.out.print(message);
+		}
+
+		public static void println(String message) {
+			System.out.println(message);
+		}
+
+		public static void printError(String message) {
+			System.err.println(message);
+		}
+    }
 
 }
