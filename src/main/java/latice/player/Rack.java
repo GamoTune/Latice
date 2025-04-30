@@ -1,6 +1,8 @@
 package latice.player;
 
 import java.util.List;
+
+import latice.application.LaticeApplicationConsole.Console;
 import latice.tile.Tile;
 
 public class Rack {
@@ -17,10 +19,8 @@ public class Rack {
     }
 
     public void displayRack() {
-        System.out.println("Rack: ");
-        for (Tile tile : tiles) {
-            System.out.println(tile);
-        }
+        Console.printRack(this);
+        
     }
 
     public List<Tile> getTiles() {

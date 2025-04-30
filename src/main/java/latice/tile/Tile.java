@@ -13,13 +13,17 @@ public class Tile {
 	
 	
 	//Methods to get the color and shape of the tile
-	public Color getColor() {
-		return color;
+	public String getColor() {
+		return color.getCode();
 	}
 	
 	// Method to get the shape of the tile
-	public Shape getShape() {
-		return shape;
+	public String getShape() {
+		return shape.getShape();
+	}
+	
+	public String toString() {
+		return getColor() + getShape() + Color.RESET.getCode();
 	}
 
 }
