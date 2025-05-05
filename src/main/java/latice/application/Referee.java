@@ -17,7 +17,7 @@ public class Referee {
         this.gameboard = gameboard;
     }
 
-    public void distribute(Rack rack, Pool pool) {
+    public void draw(Rack rack, Pool pool) {
         for (int i = 0; i < 5; i++) {
             if (!pool.isEmpty()) {
                 Tile tile = pool.drawTile();
