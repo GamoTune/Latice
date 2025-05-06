@@ -1,7 +1,7 @@
 package latice.player;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import latice.tile.Tile;
 
 public class Pool {
@@ -9,18 +9,16 @@ public class Pool {
 
     public Pool(List<Tile> tiles) {
         this.tiles = tiles;
+        Collections.shuffle(this.tiles);
     }
 
-    
     public Tile drawTile() {
         if (tiles.isEmpty()) {
             return null;
         }
-        Random rand = new Random();
-        return tiles.remove(rand.nextInt(tiles.size()));
-        }
+        return tiles.remove(0);
+    }
 
-    
     public boolean isEmpty() {
         return tiles.isEmpty();
     }
