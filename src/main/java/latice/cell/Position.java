@@ -1,6 +1,6 @@
 package latice.cell;
 
-public abstract class Position {
+public class Position {
     private int x;
     private int y;
 

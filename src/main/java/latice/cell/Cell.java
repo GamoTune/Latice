@@ -1,5 +1,11 @@
 package latice.cell;
 
+import latice.tile.Tile;
+
 public class Cell {
-	//TODO: Implement the cell logic
+	private final CellType type;
+	
+	public Cell(CellType type) {
+		this.type = type;
+	}
 }
