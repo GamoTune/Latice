@@ -42,6 +42,8 @@ public class LaticeApplicationConsole {
 			Console.printRack(player.getRack());
 			Console.printPool(player.getPool());
 		}
+		
+		
 	}
 	
 	
@@ -88,36 +90,36 @@ public class LaticeApplicationConsole {
 		public static void printPool(Pool pool) {
 			for (int i = 0; i < pool.size(); i++) {
 				print("|");
-				
 				print("  "+pool.getTile(i).toString()+"  ");
+				
 			}
 			println("|");
 		}
 		
-		public static void printBoard(Map<Position,Cell> board) {
-			for (int i = 0; i < GameBoard.ROWS; i++) {
-				
-				for (int j = 0; j < GameBoard.COLS; j++) {
-					
-					Cell cell = board.get(new Position(i, j));
-					
-					
-					if (cell != null) {
-						
-						if (cell.getTile() != null) {
-							print(cell.getTile().toString());
-						} else {
-							print(cell.getType().getSymbol());
-						}
-					} else {
-						print(CellType.NORMAL.getSymbol());
-					}
-					print(" ");
-				}
-				println("");
-			}
-  	
-		}
+//		public static void printBoard(Map<Position,Cell> board) {
+//			for (int i = 0; i < GameBoard.ROWS; i++) {
+//				
+//				for (int j = 0; j < GameBoard.COLS; j++) {
+//					
+//					Cell cell = board.get(new Position(i, j));
+//					
+//					
+//					if (cell != null) {
+//						
+//							print(cell.getTile().toString());
+//						if (cell.getTile() != null) {
+//						} else {
+//							print(cell.getType().getSymbol());
+//						}
+//					} else {
+//					}
+//						print(CellType.NORMAL.getSymbol());
+//					print(" ");
+//				}
+//				println("");
+//			}
+//  	
+//		}
     }
 
 }
