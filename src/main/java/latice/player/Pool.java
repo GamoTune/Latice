@@ -26,4 +26,8 @@ public class Pool {
 	public int size() {
 		return tiles.size();
 	}
+	
+	public Tile getTile(int index) {
+		return tiles.get(index);
+	}
 }

@@ -14,7 +14,7 @@ import latice.tile.Tile;
 public class Referee {
 
     private List<Player> players;
-    private GameBoard gameboard;
+    //private GameBoard gameboard;
     
     private final Integer RACKSIZE = 5;
     
@@ -39,7 +39,7 @@ public class Referee {
     	List<Tile> mainTiles = new ArrayList<>();
     	
     	for (Color color : Color.values()) {
-    		if (color != Color.RESET) {
+    		if (color != Color.RESET && color != Color.WHITE) {
     			for (Shape shape : Shape.values()) {
     				mainTiles.add(new Tile(color, shape));
     				mainTiles.add(new Tile(color, shape));

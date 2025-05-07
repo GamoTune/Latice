@@ -35,4 +35,8 @@ public class Player {
 
 		return rack;
 	}
+	
+	public String getName() {
+		return name;
+	}
 }	

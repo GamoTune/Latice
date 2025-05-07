@@ -1,12 +1,18 @@
 package latice.application;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import latice.cell.Cell;
+import latice.cell.CellType;
+import latice.cell.Position;
 import latice.player.Player;
+import latice.player.Pool;
 import latice.player.Rack;
 
 public class LaticeApplicationConsole {
 
+	
 	public static void main(String[] args) {
 		Console.title("Latice Game");
 		
@@ -24,7 +30,7 @@ public class LaticeApplicationConsole {
 		referee.createPlayerPool();
 		
 		for (Player player : players) {
-			Console.println("Pool of a player : " + player.getPool().size());
+			Console.println("Pool of a player '" +player.getName()+ "' : " + player.getPool().size());
 		}
 		
 		for (Player player : players) {
@@ -32,9 +38,12 @@ public class LaticeApplicationConsole {
 		}
 		
 		for (Player player : players) {
+			Console.println("Rack and Pool of '" +player.getName()+ "' : ");
 			Console.printRack(player.getRack());
+			Console.printPool(player.getPool());
 		}
 	}
+	
 	
 	// This class is used to print a String to the console
     public static class Console {
@@ -61,7 +70,6 @@ public class LaticeApplicationConsole {
 		}
 		
 		public static void printRack(Rack rack) {
-			println("|-----|-----|-----|-----|-----|");
 			for (int i = 0; i < 5; i++) {
 				
 				print("|");
@@ -69,11 +77,46 @@ public class LaticeApplicationConsole {
 				if (i < rack.getTiles().size()) {
 					print("  "+rack.getTiles().get(i).toString()+"  ");
 				} else {
-					print("     ");
+					print(" ");
 				}
 			}
+			
 			println("|");
-			println("|-----|-----|-----|-----|-----|");
+		
+		}
+		
+		public static void printPool(Pool pool) {
+			for (int i = 0; i < pool.size(); i++) {
+				print("|");
+				
+				print("  "+pool.getTile(i).toString()+"  ");
+			}
+			println("|");
+		}
+		
+		public static void printBoard(Map<Position,Cell> board) {
+			for (int i = 0; i < GameBoard.ROWS; i++) {
+				
+				for (int j = 0; j < GameBoard.COLS; j++) {
+					
+					Cell cell = board.get(new Position(i, j));
+					
+					
+					if (cell != null) {
+						
+						if (cell.getTile() != null) {
+							print(cell.getTile().toString());
+						} else {
+							print(cell.getType().getSymbol());
+						}
+					} else {
+						print(CellType.NORMAL.getSymbol());
+					}
+					print(" ");
+				}
+				println("");
+			}
+  	
 		}
     }
 
