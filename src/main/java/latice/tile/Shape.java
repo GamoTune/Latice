@@ -6,10 +6,7 @@ public enum Shape{
 	FEATHER("🪶"),
 	FLOWER("🌼"),
 	LIZARD("🦎"),
-	TURTLE("🐢"),
-	SUN("☀️"),
-	MOON("🌙"),
-	SEA("🟦");
+	TURTLE("🐢");
 
 	// Enum constants for different shapes
 	private final String form;

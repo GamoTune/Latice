@@ -22,4 +22,8 @@ public class Pool {
     public boolean isEmpty() {
         return tiles.isEmpty();
     }
+
+	public int size() {
+		return tiles.size();
+	}
 }

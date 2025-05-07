@@ -8,6 +8,10 @@ import latice.tile.Tile;
 public class Rack {
     private List<Tile> tiles;
 
+    public Rack() {
+		this.tiles = new java.util.ArrayList<>();
+	}
+    
     public Rack(List<Tile> tiles) {
         this.tiles = tiles;
     }
