@@ -12,6 +12,7 @@ import latice.player.Rack;
 
 public class LaticeApplicationConsole {
 
+	private static GameBoard gameboard;
 	
 	public static void main(String[] args) {
 		Console.title("Latice Game");
@@ -20,30 +21,12 @@ public class LaticeApplicationConsole {
 		
 		Console.println("This is a console version of the game.");
 		
-		ArrayList<Player> players = new ArrayList<>();
-		players.add(new Player("Player1"));
-		players.add(new Player("Player2"));
+		gameboard = new GameBoard();
 		
-		Referee referee = new Referee(players);
+		Console.println("Gameboard initialized.");
 		
-		// Create a pool of tiles
-		referee.createPlayerPool();
-		
-		for (Player player : players) {
-			Console.println("Pool of a player '" +player.getName()+ "' : " + player.getPool().size());
-		}
-		
-		for (Player player : players) {
-			player.setRack(referee.draw(player.getRack(), player.getPool()));
-		}
-		
-		for (Player player : players) {
-			Console.println("Rack and Pool of '" +player.getName()+ "' : ");
-			Console.printRack(player.getRack());
-			Console.printPool(player.getPool());
-		}
-		
-		
+		Console.println("Gameboard cells:");
+		Console.printBoard(gameboard.getCells());
 	}
 	
 	
