@@ -1,32 +1,43 @@
 package latice.view;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import latice.application.GameBoard;
 
 public class MainWindow extends Application {
-	
-	static final int WIN_WIDTH = 800;
-	static final int WIN_HEIGHT = 900;
 
     @Override
     public void start(Stage primaryStage) {
-    	
-    	GameBoard gameBoard = new GameBoard();
-        
+        GameBoard gameBoard = new GameBoard();
         GameBoardPanel gameBoardPanel = new GameBoardPanel();
         PlayerRackPanel playerRackPanel = new PlayerRackPanel();
 
-        
         BorderPane root = new BorderPane();
-        root.setCenter(gameBoardPanel);
-        root.setBottom(playerRackPanel);
+
+        HBox boardWrapper = new HBox();
+        boardWrapper.setAlignment(Pos.CENTER);
+        boardWrapper.getChildren().add(gameBoardPanel);
+        root.setCenter(boardWrapper);
+
+        HBox rackWrapper = new HBox();
+        rackWrapper.setAlignment(Pos.CENTER);
+        rackWrapper.getChildren().add(playerRackPanel);
+        root.setBottom(rackWrapper);
 
         
-        Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
+        BorderPane.setMargin(rackWrapper, new Insets(0, 0, 25, 0));
 
+        Scene scene = new Scene(root);
+
+        
+        primaryStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);
         primaryStage.setTitle("Plateau de jeu Latice");
         primaryStage.setScene(scene);
         primaryStage.show();

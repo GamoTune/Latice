@@ -4,30 +4,32 @@ import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 public class PlayerRackPanel extends HBox {
     public PlayerRackPanel() {
-        // Spacing between tiles
         setSpacing(10);
-        
-        // Padding around the rack
-        setPadding(new Insets(10));
-        
-        // Background color and gradient
-        setStyle("-fx-background-color: linear-gradient(to bottom, #9b7f51, #6a4f2f);");
-        
-        // Center the rack in the window
-        setAlignment(javafx.geometry.Pos.CENTER);
-        
-        // Reduce the width of the rack
-        double rackWidth = (5 * 64) + (4 * 10);
-        setPrefWidth(rackWidth - 20);
-        
+        setPadding(new Insets(10, 10, 20, 10));
+        setStyle("-fx-background-color: linear-gradient(to bottom, #D1A15A, #A87F4A); " +
+                 "-fx-border-radius: 15; " +
+                 "-fx-background-radius: 15;");
+        setEffect(new DropShadow(10, 4, 4, Color.BLACK));
+        setAlignment(Pos.CENTER);
+        setMaxWidth((5 * 64) + (4 * 10) + 40);
+        setPrefWidth((5 * 64) + (4 * 10));
+
         for (int i = 0; i < 5; i++) {
-            Image tileImage = new Image(getClass().getResource("/assets/bird_yellow.png").toExternalForm()); 
+            Image tileImage = new Image(getClass().getResource("/assets/bird_yellow.png").toExternalForm());
             ImageView tileView = new ImageView(tileImage);
             tileView.setFitWidth(64);
             tileView.setFitHeight(64);
+            tileView.setEffect(new DropShadow(5, 2, 2, Color.rgb(0, 0, 0, 0.5)));
+
+            
+            tileView.setTranslateY(5);
+
             getChildren().add(tileView);
         }
     }
