@@ -7,19 +7,21 @@ import javafx.geometry.Insets;
 
 public class PlayerRackPanel extends HBox {
     public PlayerRackPanel() {
-        // Espacement entre les tuiles
+        // Spacing between tiles
         setSpacing(10);
-        // Padding autour du rack
+        
+        // Padding around the rack
         setPadding(new Insets(10));
-        // Style du fond avec une couleur boisée dégradée
+        
+        // Background color and gradient
         setStyle("-fx-background-color: linear-gradient(to bottom, #9b7f51, #6a4f2f);");
         
-        // Centrer les éléments dans le HBox
+        // Center the rack in the window
         setAlignment(javafx.geometry.Pos.CENTER);
         
-        // Réduire la largeur du rack en ajustant légèrement
-        double rackWidth = (5 * 64) + (4 * 10); // Largeur des 5 tuiles et des 4 espacements
-        setPrefWidth(rackWidth - 20); // Réduire la largeur totale pour être plus compact (par exemple, retirer 20px)
+        // Reduce the width of the rack
+        double rackWidth = (5 * 64) + (4 * 10);
+        setPrefWidth(rackWidth - 20);
         
         for (int i = 0; i < 5; i++) {
             Image tileImage = new Image(getClass().getResource("/assets/bird_yellow.png").toExternalForm()); 

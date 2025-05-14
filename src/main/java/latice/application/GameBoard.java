@@ -1,18 +1,14 @@
 package latice.application;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
-import latice.tile.Tile;
 
 public class GameBoard {
-	private HashMap<Position, Cell> cells;
-	private HashMap<Position, Tile> tiles;
+	static HashMap<Position, Cell> cells;
 	public static final int ROWS = 9;
 	public static final int COLS = 9;
 	private final Integer MID_ROW = Math.round(ROWS / 2);
@@ -25,7 +21,6 @@ public class GameBoard {
 	
 	private void initializeBoard() {
 		cells = new HashMap<Position, Cell>();
-		tiles = new HashMap<Position, Tile>();
 		
 		// Initialize local variables
 		final int GRID_PAD = 1; // Used to align cell positions on the grid of the game when ROWS or COLS are used.
@@ -51,7 +46,7 @@ public class GameBoard {
 		
 	}
 	
-	public Map<Position, Cell> getCells() {
+	public static Map<Position, Cell> getCells() {
 		return cells;
 	}
 }

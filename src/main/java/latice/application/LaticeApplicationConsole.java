@@ -1,14 +1,15 @@
 package latice.application;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
-import latice.player.Player;
 import latice.player.Pool;
 import latice.player.Rack;
+import latice.view.MainWindow;
+
+
 
 public class LaticeApplicationConsole {
 
@@ -19,14 +20,15 @@ public class LaticeApplicationConsole {
 		
 		Console.println("Welcome to Latice!");
 		
-		Console.println("This is a console version of the game.");
+		Console.println("This is a ui version of the game.");
 		
 		gameboard = new GameBoard();
 		
 		Console.println("Gameboard initialized.");
 		
-		Console.println("Gameboard cells:");
-		Console.printBoard(gameboard.getCells());
+		MainWindow mainWindow = new MainWindow();
+		
+		
 	}
 	
 	
