@@ -11,7 +11,8 @@ import javafx.scene.paint.Color;
 public class PlayerRackPanel extends HBox {
     public PlayerRackPanel() {
         setSpacing(10);
-        setPadding(new Insets(10, 10, 20, 10));
+        // Ajout d'une marge en bas avec Insets(top, right, bottom, left)
+        setPadding(new Insets(10, 10, 30, 10)); 
         setStyle("-fx-background-color: linear-gradient(to bottom, #D1A15A, #A87F4A); " +
                  "-fx-border-radius: 15; " +
                  "-fx-background-radius: 15;");
@@ -27,9 +28,7 @@ public class PlayerRackPanel extends HBox {
             tileView.setFitHeight(64);
             tileView.setEffect(new DropShadow(5, 2, 2, Color.rgb(0, 0, 0, 0.5)));
 
-            
             tileView.setTranslateY(5);
-
             getChildren().add(tileView);
         }
     }
