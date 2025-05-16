@@ -35,7 +35,7 @@ public class GameBoardPanel extends StackPane {
         grid.setHgap(0);
         grid.setTranslateY(Y_OFFSET);
 
-        // Ajoute une marge en haut du plateau
+        // Set the size of the grid
         setPadding(new Insets(60, 0, 0, 0)); // top, right, bottom, left
 
         drawBoard();
