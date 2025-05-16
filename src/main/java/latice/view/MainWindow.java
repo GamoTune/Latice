@@ -1,5 +1,7 @@
 package latice.view;
 
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,20 +9,21 @@ import javafx.scene.Scene;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import latice.application.GameBoard;
-
-import java.net.URL;
+import latice.application.LaticeApplicationConsole.Console;
 
 public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Charger l'image en fond
+        // Load background image
         URL imageUrl = getClass().getResource("/assets/Oceanbackground.png");
         if (imageUrl == null) {
-            System.err.println("L'image n'a pas été trouvée !");
+            Console.printError("L'image n'a pas été trouvée !");
             return;
         }
 
@@ -31,10 +34,10 @@ public class MainWindow extends Application {
         backgroundImageView.fitWidthProperty().bind(primaryStage.widthProperty());
         backgroundImageView.fitHeightProperty().bind(primaryStage.heightProperty());
 
-        // Appliquer un flou sur l'image
+        // Add a blur effect to the background image
         backgroundImageView.setEffect(new GaussianBlur(30));
 
-        // UI du jeu
+        // Create the game board and player rack panels
         GameBoard gameBoard = new GameBoard();
         GameBoardPanel gameBoardPanel = new GameBoardPanel();
         PlayerRackPanel playerRackPanel = new PlayerRackPanel();
@@ -50,7 +53,7 @@ public class MainWindow extends Application {
         BorderPane.setMargin(rackWrapper, new Insets(20, 0, 40, 0));
         root.setBottom(rackWrapper);
 
-        // Empiler l'image floutée derrière l'interface
+        
         StackPane mainContainer = new StackPane(backgroundImageView, root);
 
         Scene scene = new Scene(mainContainer);
