@@ -30,4 +30,9 @@ public class Pool {
 	public Tile getTile(int index) {
 		return tiles.get(index);
 	}
+	
+	public List<Tile> getTiles() {
+	    return tiles;
+	}
+ 
 }
