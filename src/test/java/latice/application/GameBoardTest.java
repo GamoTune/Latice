@@ -23,14 +23,14 @@ class GameBoardTest {
 
     @Test
     void testCenterCellIsMoon() {
-        Position center = new Position(4, 4); // 9x9 board → milieu = (4,4)
-        assertTrue(cells.containsKey(center), "La cellule centrale doit exister");
-        assertEquals(CellType.MOON, cells.get(center).getType(), "La cellule centrale doit être de type MOON");
+        Position center = new Position(4, 4);
+        assertTrue(cells.containsKey(center), "The center position should exist in the cells map");
+        assertEquals(CellType.MOON, cells.get(center).getType(), "The center cell should be of type MOON");
     }
 
     @Test
     void testSunCellsDiagonalsAndMiddles() {
-        // Coins diagonaux
+        // Sun cells are located at the corners and diagonals of the board
         Position[] diagonals = {
             new Position(0, 0),
             new Position(8, 0),
@@ -46,7 +46,7 @@ class GameBoardTest {
             new Position(6, 6)
         };
 
-        // Cellules médianes (au centre de chaque côté)
+        // Middle cells are located at the sides of the board
         Position[] sides = {
             new Position(4, 0),
             new Position(4, 8),
@@ -55,19 +55,18 @@ class GameBoardTest {
         };
 
         for (Position pos : diagonals) {
-            assertTrue(cells.containsKey(pos), "Position diagonale manquante : " + pos);
-            assertEquals(CellType.SUN, cells.get(pos).getType(), "La cellule en " + pos + " devrait être SUN");
+            assertTrue(cells.containsKey(pos), "Diagonal position is missing : " + pos);
+            assertEquals(CellType.SUN, cells.get(pos).getType(), "The cell at " + pos + " should be SUN");
         }
 
         for (Position pos : sides) {
-            assertTrue(cells.containsKey(pos), "Position médiane manquante : " + pos);
-            assertEquals(CellType.SUN, cells.get(pos).getType(), "La cellule en " + pos + " devrait être SUN");
+            assertTrue(cells.containsKey(pos), "Middle position is missing : " + pos);
+            assertEquals(CellType.SUN, cells.get(pos).getType(), "The cell at " + pos + " should be SUN");
         }
     }
 
     @Test
     void testTotalSpecialCells() {
-        // 12 diagonales + 4 médianes + 1 centre = 17
-        assertEquals(17, cells.size(), "Il doit y avoir 17 cellules spéciales (SUN + MOON)");
+        assertEquals(17, cells.size(), "The total number of special cells should be 17");
     }
 }
