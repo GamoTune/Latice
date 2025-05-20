@@ -53,7 +53,6 @@ public class MainWindow extends Application {
         BorderPane.setMargin(rackWrapper, new Insets(20, 0, 40, 0));
         root.setBottom(rackWrapper);
 
-        
         StackPane mainContainer = new StackPane(backgroundImageView, root);
 
         Scene scene = new Scene(mainContainer);
