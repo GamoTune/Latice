@@ -13,16 +13,33 @@ import latice.tile.Tile;
 
 public class Referee {
 
-    private List<Player> players;
-    //private GameBoard gameboard;
+    public List<Player> players;
+
     
     private final Integer RACKSIZE = 5;
+    private final Integer NB_PLAYER = 2; // Number of players, can be adjusted as needed
     
-    public Referee(List<Player> players) {
-        this.players = players;
-        //this.gameboard = gameboard;
+    // Constructor to initialize the referee with a list of players
+    public Referee() {
+    	
+    	this.players = new ArrayList<>();
+    	
+    	for (int i = 0; i < NB_PLAYER; i++) {
+			this.players.add(new Player("Player " + (i + 1)));
+		}
+    	
+    	createPlayerPool();
+    	
+    	for (Player player : this.players) {
+			player.setRack(new Rack());
+			draw(player.getRack(), player.getPool());
+		}
+    	
+    	
+    	
     }
-
+    
+    
     public Rack draw(Rack rack, Pool pool) {
     	
         for (int i = 0; i < RACKSIZE; i++) {
@@ -35,6 +52,7 @@ public class Referee {
     }
 
     
+    // Create a pool of tiles for each player
     public void createPlayerPool() {
     	List<Tile> mainTiles = new ArrayList<>();
     	
@@ -83,4 +101,5 @@ public class Referee {
     	
         return false; 
     }
+    
 }
