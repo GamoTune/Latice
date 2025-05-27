@@ -3,6 +3,7 @@ package latice.application;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import latice.player.Player;
 import latice.player.Pool;
@@ -39,7 +40,7 @@ public class Referee {
     	
     }
     
-    
+    // Draw tiles from the pool and add them to the player's rack
     public Rack draw(Rack rack, Pool pool) {
     	
         for (int i = 0; i < RACKSIZE; i++) {
@@ -85,20 +86,23 @@ public class Referee {
     
     
     
-    
-    // TODO: Implement the logic to choose which player plays
-    public void choosePlayer() {
-        
-    }
-
-    // TODO: Implement the logic to display a player's rack
-    public void showRack() {
-        
-    }
-
-    // TODO: Implement the logic to validate tile placement
-    public boolean isPlacementValid() {
+    // Choose a random player from the list of players
+    public Player choosePlayer() {
+    	Random rand = new Random();
+    	int randomIndex = rand.nextInt(players.size());
+    	Player chosenPlayer = players.get(randomIndex);
     	
+    	return chosenPlayer;
+    }
+
+    
+    public void showRack() {
+        // TODO: Implement the logic to display a player's rack
+
+    }
+
+    public boolean isPlacementValid() {
+        // TODO: Implement the logic to validate tile placement
         return false; 
     }
     

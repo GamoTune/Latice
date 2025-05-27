@@ -62,4 +62,17 @@ public class RefereeTest {
             assertEquals(expectedTilesPerPlayer, pool.size());
         }
     }
+    
+    // This test verifies that the choosePlayer method selects a player randomly from the list of players.    
+    @Test
+    public void testChoosePlayer() {
+        List<Player> players = referee.players;
+
+        assertFalse(players.isEmpty(), "The list of players should not be empty");
+
+        Player chosenPlayer = referee.choosePlayer();
+
+        assertNotNull(chosenPlayer, "The chosen player should not be null");
+        assertTrue(players.contains(chosenPlayer), "The chosen player should be part of the list of players");
+    }
 }
