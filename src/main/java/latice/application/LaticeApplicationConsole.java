@@ -1,14 +1,16 @@
 package latice.application;
 
-import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
-import latice.player.Player;
 import latice.player.Pool;
 import latice.player.Rack;
+import latice.view.MainWindow;
+
+
 
 public class LaticeApplicationConsole {
 
@@ -19,19 +21,50 @@ public class LaticeApplicationConsole {
 		
 		Console.println("Welcome to Latice!");
 		
-		Console.println("This is a console version of the game.");
+		Console.println("Choose your game mode:");
+		Console.println("1. Console");
+		Console.println("2. GUI");
 		
-		gameboard = new GameBoard();
+		String choice = "";
+		Boolean isValide = false;
 		
-		Console.println("Gameboard initialized.");
-		
-		Console.println("Gameboard cells:");
-		Console.printBoard(gameboard.getCells());
+		// Loop until the user enters a valid choice
+		while (Boolean.TRUE.equals(isValide) == false) {
+			choice = Console.ask("Enter your choice (1 or 2): ");
+			
+			if (choice.equals("1")) {
+				isValide = true;
+				Console.println("You chose Console mode.");
+				Console.println("Starting game in console mode...");
+				
+				// Start the console game
+				new GameBoard();
+				Console.printBoard(GameBoard.getCells());
+				
+				
+			} else if (choice.equals("2")) {
+				isValide = true;
+				Console.println("You chose GUI mode.");
+				Console.println("Starting game in GUI mode...");
+				
+				// Start the GUI game
+				MainWindow.main(args);
+			} else {
+				Console.printError("Invalid choice. Please enter 1 or 2.");
+			}
+		}
+
 	}
 	
 	
 	// This class is used to print a String to the console
     public static class Console {
+    	
+    	private Console() {
+			// Prevent instantiation
+    	}
+    	
+    	private static final Scanner scanner = new Scanner(System.in);
     	
     	//Function to print a message without a newline
     	public static void print(Object obj) {
@@ -47,6 +80,12 @@ public class LaticeApplicationConsole {
 		public static void printError(Object obj) {
 			System.err.println(obj);
 		}
+		
+		//Function to ask a question and return the answer
+		public static String ask(String question) {
+	        System.out.print(question);  // Print the question
+	        return scanner.nextLine();   // Read the user's input
+	    }
 		
 		public static void title (String title) {
 			println("========================================");

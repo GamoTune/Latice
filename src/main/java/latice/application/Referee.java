@@ -48,7 +48,6 @@ public class Referee {
      	}    	
     	
     	Collections.shuffle(mainTiles);
-    	System.out.println("Main Tiles: " + mainTiles.size());
 
         int tilesPerPlayer = mainTiles.size() / players.size();
 
