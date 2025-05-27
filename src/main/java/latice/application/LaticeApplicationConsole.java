@@ -83,8 +83,8 @@ public class LaticeApplicationConsole {
 		
 		//Function to ask a question and return the answer
 		public static String ask(String question) {
-	        System.out.print(question);  // Affiche la question sans saut de ligne
-	        return scanner.nextLine();   // Lit la ligne saisie par l'utilisateur
+	        System.out.print(question);  // Print the question
+	        return scanner.nextLine();   // Read the user's input
 	    }
 		
 		public static void title (String title) {
