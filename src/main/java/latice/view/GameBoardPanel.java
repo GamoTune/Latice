@@ -44,14 +44,18 @@ public class GameBoardPanel extends StackPane {
     }
 
     private void drawBoard() {
+    	// Clear the grid and redraw the cells
         Map<Position, Cell> cells = GameBoard.getCells();
         grid.getChildren().clear();
 
+        // Loop through each cell in the grid
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 Position pos = new Position(row, col);
                 Image img = cellImage;
 
+                // Check if the cell exists in the game board
+                // and set the appropriate image based on its type
                 if (cells.containsKey(pos)) {
                     Cell cell = cells.get(pos);
                     if (cell.getType() == CellType.MOON) {
@@ -61,10 +65,12 @@ public class GameBoardPanel extends StackPane {
                     }
                 }
 
+                // Create an ImageView for the cell image
                 ImageView imageView = new ImageView(img);
                 imageView.setFitWidth(CELL_SIZE);
                 imageView.setFitHeight(CELL_SIZE);
 
+                
                 StackPane cellPane = new StackPane(imageView);
                 cellPane.setPrefSize(CELL_SIZE, CELL_SIZE);
                 grid.add(cellPane, col, row);

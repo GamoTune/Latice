@@ -22,4 +22,9 @@ public enum Color {
     public String getCode() {
         return code;
     }
+    
+    // Method to get the color name in lowercase
+    public String getName() {
+		return name().toLowerCase();
+	}
 }

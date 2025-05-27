@@ -25,5 +25,10 @@ public class Tile {
 	public String toString() {
 		return getColor() + getShape() + Color.RESET.getCode();
 	}
+	
+	// Method to get the name of the tile
+	public String getName() {
+		return shape.getName() + "_" + color.getName();
+	}
 
 }
