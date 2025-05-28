@@ -1,4 +1,15 @@
-package latice.application;
+package latice.controller;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import latice.player.Player;
 import latice.player.Pool;
@@ -6,14 +17,6 @@ import latice.player.Rack;
 import latice.tile.Color;
 import latice.tile.Shape;
 import latice.tile.Tile;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class RefereeTest {
 

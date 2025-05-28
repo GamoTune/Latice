@@ -8,10 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import latice.application.GameBoard;
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
+import latice.gameboard.GameBoard;
 
 public class GameBoardPanel extends StackPane {
     private static final int GRID_SIZE = GameBoard.ROWS;

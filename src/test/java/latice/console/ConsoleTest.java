@@ -1,4 +1,4 @@
-package latice.application;
+package latice.console;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
+import latice.gameboard.GameBoard;
 import latice.player.Pool;
 import latice.player.Rack;
 import latice.tile.Color;
@@ -49,19 +50,19 @@ class ConsoleTest {
 
     @Test
     void testPrint() {
-        LaticeApplicationConsole.Console.print("Test");
+        Console.print("Test");
         assertEquals("Test", outContent.toString());
     }
 
     @Test
     void testPrintln() {
-        LaticeApplicationConsole.Console.println("Hello");
+        Console.println("Hello");
         assertEquals("Hello" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
     void testPrintError() {
-        LaticeApplicationConsole.Console.printError("Error message");
+        Console.printError("Error message");
         assertEquals("Error message" + System.lineSeparator(), errContent.toString());
     }
 
@@ -70,14 +71,14 @@ class ConsoleTest {
         String simulatedInput = "response\n";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        String result = LaticeApplicationConsole.Console.ask("Enter: ");
+        String result = Console.ask("Enter: ");
         assertEquals("response", result);
         assertTrue(outContent.toString().startsWith("Enter: "));
     }
 
     @Test
     void testTitle() {
-        LaticeApplicationConsole.Console.title("Latice");
+        Console.title("Latice");
         String expected = 
             "========================================" + System.lineSeparator() +
             "  Latice" + System.lineSeparator() +
@@ -91,7 +92,7 @@ class ConsoleTest {
         rack.addTile(new Tile(Color.RED, Shape.BIRD));
         rack.addTile(new Tile(Color.GREEN, Shape.DOLPHIN));
 
-        LaticeApplicationConsole.Console.printRack(rack);
+        Console.printRack(rack);
         String output = outContent.toString();
         assertTrue(output.contains("🦅"));
         assertTrue(output.contains("🐬"));
@@ -105,7 +106,7 @@ class ConsoleTest {
         tiles.add(new Tile(Color.YELLOW, Shape.FLOWER));
         Pool pool = new Pool(tiles);
 
-        LaticeApplicationConsole.Console.printPool(pool);
+        Console.printPool(pool);
         String output = outContent.toString();
         assertTrue(output.contains("🐢"));
         assertTrue(output.contains("🌼"));
@@ -113,9 +114,9 @@ class ConsoleTest {
 
     @Test
     void testPrintBoard() {
-        GameBoard board = new GameBoard();  // initialise les cellules avec SUN et MOON
+        new GameBoard();  // initialise les cellules avec SUN et MOON
         Map<Position, Cell> cells = GameBoard.getCells();
-        LaticeApplicationConsole.Console.printBoard(cells);
+        Console.printBoard(cells);
         String output = outContent.toString();
         assertTrue(output.contains(CellType.SUN.getSymbol()) || output.contains(CellType.MOON.getSymbol()));
     }

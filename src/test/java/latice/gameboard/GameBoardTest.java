@@ -1,23 +1,25 @@
-package latice.application;
+package latice.gameboard;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
-    private GameBoard gameBoard;
+
     private Map<Position, Cell> cells;
 
     @BeforeEach
     void setUp() {
-        gameBoard = new GameBoard();
+        new GameBoard();
         cells = GameBoard.getCells();
     }
 

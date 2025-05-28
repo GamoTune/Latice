@@ -13,9 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import latice.application.GameBoard;
-import latice.application.LaticeApplicationConsole.Console;
-import latice.application.Referee;
+import latice.console.Console;
+import latice.controller.Referee;
 
 public class MainWindow extends Application {
 

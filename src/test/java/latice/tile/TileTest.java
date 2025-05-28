@@ -30,4 +30,10 @@ class TileTest {
         Tile tile3 = new Tile(Color.RED, Shape.BIRD);
         assertEquals("\u001B[31m🦅\u001B[0m", tile3.toString());
     }
+    
+    @Test
+    void testTileGetName() {
+    	Tile tile = new Tile(Color.CYAN, Shape.FEATHER);
+    	assertEquals("feather_cyan", tile.getName());
+    }
 }

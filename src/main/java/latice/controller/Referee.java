@@ -1,10 +1,11 @@
-package latice.application;
+package latice.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import latice.gameboard.GameBoard;
 import latice.player.Player;
 import latice.player.Pool;
 import latice.player.Rack;
