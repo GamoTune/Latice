@@ -14,7 +14,6 @@ import latice.view.MainWindow;
 
 public class LaticeApplicationConsole {
 
-	private static GameBoard gameboard;
 	
 	public static void main(String[] args) {
 		Console.title("Latice Game");
@@ -38,8 +37,7 @@ public class LaticeApplicationConsole {
 				Console.println("Starting game in console mode...");
 				
 				// Start the console game
-				new GameBoard();
-				Console.printBoard(GameBoard.getCells());
+				startConsoleGame();
 				
 				
 			} else if (choice.equals("2")) {
@@ -55,6 +53,31 @@ public class LaticeApplicationConsole {
 		}
 
 	}
+	
+	
+	private static void startConsoleGame() {
+		
+		// Initialize the referee
+		Referee referee = new Referee();
+		
+		
+		Console.title("Latice Game - Console Mode");
+		
+		Console.println("Game started in console mode.");
+		
+		// Print the initial game board
+		Console.printBoard(GameBoard.getCells());
+		
+		
+		// Print the first player's rack
+		Console.println("Player 1's Rack:");
+		Console.printRack(referee.players.get(0).getRack());
+	}
+	
+	
+	
+	
+	
 	
 	
 	// This class is used to print a String to the console

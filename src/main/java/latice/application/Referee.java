@@ -13,6 +13,8 @@ import latice.tile.Shape;
 import latice.tile.Tile;
 
 public class Referee {
+	
+	private final GameBoard gameboard;
 
     public List<Player> players;
 
@@ -22,6 +24,8 @@ public class Referee {
     
     // Constructor to initialize the referee with a list of players
     public Referee() {
+    	
+    	gameboard = new GameBoard();
     	
     	this.players = new ArrayList<>();
     	
@@ -104,6 +108,10 @@ public class Referee {
     public boolean isPlacementValid() {
         // TODO: Implement the logic to validate tile placement
         return false; 
+    }
+    
+    public GameBoard getGameBoard() {
+    	return gameboard;
     }
     
 }

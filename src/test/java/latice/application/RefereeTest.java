@@ -23,6 +23,12 @@ public class RefereeTest {
     public void setUp() {
         referee = new Referee();
     }
+    
+    
+    @Test
+    public void testGameBoardInitialization() {
+		assertNotNull(referee.getGameBoard(), "Game board should be initialized");
+	}
 
     @Test
     public void testDrawAddsFiveTilesToRack() {

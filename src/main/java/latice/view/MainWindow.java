@@ -43,10 +43,7 @@ public class MainWindow extends Application {
 
 		
 		// Create a new referee
-		
 		Referee referee = new Referee();
-		
-		GameBoard gameBoard = new GameBoard();
 		GameBoardPanel gameBoardPanel = new GameBoardPanel();
 		
 		PlayerRackPanel playerRackPanel = new PlayerRackPanel(referee.players.get(0));
