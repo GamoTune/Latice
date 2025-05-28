@@ -2,7 +2,7 @@ package latice.player;
 
 import java.util.List;
 
-import latice.application.LaticeApplicationConsole.Console;
+import latice.console.Console;
 import latice.tile.Tile;
 
 public class Rack {

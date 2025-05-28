@@ -20,4 +20,9 @@ public enum Shape{
 	public String getShape() {
 		return form;
 	}
+	
+	// Method to get the shape as a string
+	public String getName() {
+		return name().toLowerCase();
+	}
 }

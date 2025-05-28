@@ -13,8 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import latice.application.GameBoard;
-import latice.application.LaticeApplicationConsole.Console;
+import latice.console.Console;
+import latice.controller.Referee;
 
 public class MainWindow extends Application {
 
@@ -27,6 +27,8 @@ public class MainWindow extends Application {
 			return;
 		}
 
+		
+		// Create an ImageView for the background image
 		Image backgroundImage = new Image(imageUrl.toExternalForm());
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 
@@ -34,16 +36,22 @@ public class MainWindow extends Application {
 		backgroundImageView.fitWidthProperty().bind(primaryStage.widthProperty());
 		backgroundImageView.fitHeightProperty().bind(primaryStage.heightProperty());
 
+		
 		// Add a blur effect to the background image
 		backgroundImageView.setEffect(new GaussianBlur(30));
 
-		// Create the game board and player rack panels
-		GameBoard gameBoard = new GameBoard();
+		
+		// Create a new referee
+		Referee referee = new Referee();
 		GameBoardPanel gameBoardPanel = new GameBoardPanel();
-		PlayerRackPanel playerRackPanel = new PlayerRackPanel();
+		
+		PlayerRackPanel playerRackPanel = new PlayerRackPanel(referee.players.get(0));
 
+		// Initialize the game board and player rack panels
 		BorderPane root = new BorderPane();
 
+		
+		// Set the game board and player rack panels in the layout
 		HBox boardWrapper = new HBox(gameBoardPanel);
 		boardWrapper.setAlignment(Pos.CENTER);
 		root.setCenter(boardWrapper);
@@ -54,10 +62,12 @@ public class MainWindow extends Application {
 		root.setBottom(rackWrapper);
 
         
+		// Set the background image view as the root of the scene
         StackPane mainContainer = new StackPane(backgroundImageView, root);
 
 		Scene scene = new Scene(mainContainer);
 
+		// Set the scene to the primary stage
 		primaryStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
 		primaryStage.setResizable(false);
 		primaryStage.setMaximized(true);

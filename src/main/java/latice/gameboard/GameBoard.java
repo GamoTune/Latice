@@ -1,4 +1,4 @@
-package latice.application;
+package latice.gameboard;
 
 import java.util.HashMap;
 import java.util.Map;
