@@ -10,7 +10,7 @@ public enum CellType {
 	private final String symbol;
 	
 	// Constructor to initialize the cell type
-	CellType(String symbol) {
+	private CellType(String symbol) {
 		this.symbol = symbol;
 	}
 	
