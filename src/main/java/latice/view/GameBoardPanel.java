@@ -18,7 +18,7 @@ public class GameBoardPanel extends StackPane {
     private static final double Y_OFFSET = -30;
 
 
-    private GridPane grid;
+    private static GridPane grid;
 
     public GameBoardPanel() {
 
@@ -36,7 +36,7 @@ public class GameBoardPanel extends StackPane {
         getChildren().add(grid);
     }
 
-    private void drawBoard() {
+    public static void drawBoard() {
     	// Clear the grid and redraw the cells
         Map<Position, Cell> cells = GameBoard.getCells();
         grid.getChildren().clear();

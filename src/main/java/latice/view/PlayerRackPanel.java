@@ -3,8 +3,6 @@ package latice.view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import latice.player.Player;
@@ -34,7 +32,20 @@ public class PlayerRackPanel extends HBox {
         setMaxWidth(RACK_WIDTH);
         setPrefWidth(RACK_HEIGHT);
 
-        for (Tile tile: player.getRack().getTiles()) {
+        displayRack(player);
+        
+    }
+    
+    
+    public void clearRack() {
+		getChildren().clear();
+	}
+    
+    public void displayRack(Player player) {
+    	getChildren().clear();
+		
+		// Loop through each tile in the player's rack
+    	for (Tile tile: player.getRack().getTiles()) {
         	
         	TileView tileView = new TileView(tile);
             tileView.setFitWidth(TILE_SIZE);
@@ -48,24 +59,6 @@ public class PlayerRackPanel extends HBox {
             getChildren().add(tileView);
         }
     }
-    
-    
-    public void clearRack() {
-		getChildren().clear();
-	}
-    
-    
-    public void addTile(Image tileImage) {
-		if (getChildren().size() < RACK_SIZE) {
-			ImageView tileView = new ImageView(tileImage);
-			tileView.setFitWidth(TILE_SIZE);
-			tileView.setFitHeight(TILE_SIZE);
-			tileView.setEffect(new DropShadow(5, 2, 2, Color.rgb(0, 0, 0, 0.5))); // Add shadow effect to the tile
-
-			tileView.setTranslateY(5);
-			getChildren().add(tileView);
-		}
-	}
     
     
 }

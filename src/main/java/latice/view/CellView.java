@@ -7,21 +7,22 @@ import latice.cell.Cell;
 public class CellView extends ImageView {
 	
 	private final Cell cell;
+	private final String pathToImage;
 	
 	
 	public CellView(Cell cell) {
 		this.cell = cell;
-		Image cellImage = new Image(getClass().getResource("/assets/bg_" + cell.getName() + ".png").toExternalForm());
+		if (cell.getTile() != null) {
+			pathToImage = cell.getTile().getName();
+		} else {
+			pathToImage = "bg_" + cell.getName();
+		}
+		Image cellImage = new Image(getClass().getResource("/assets/"+ pathToImage +".png").toExternalForm());
 		setImage(cellImage);
 	}
 	
 	public Cell getCell() {
 		return cell;
-	}
-	
-	public void setTile(TileView tileView) {
-		 cell.setTile(tileView.getTile());
-		 
 	}
 	
 	

@@ -6,14 +6,16 @@ import java.util.Map;
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
+import latice.console.Console;
+import latice.controller.Referee;
 import latice.tile.Tile;
 
 public class GameBoard {
-	static HashMap<Position, Cell> cells;
+	public static HashMap<Position, Cell> cells;
 	public static final int ROWS = 9;
 	public static final int COLS = 9;
-	private final Integer MID_ROW = Math.round(ROWS / 2);
-    private final Integer MID_COL = Math.round(COLS / 2);
+	private static final Integer MID_ROW = Math.round(ROWS / 2);
+    private static final Integer MID_COL = Math.round(COLS / 2);
 	
 	public GameBoard() {
 		initializeBoard();
@@ -28,29 +30,47 @@ public class GameBoard {
 		
 		// Initialize the cells with SUN type
 		// Diagonal cells
+		Cell tempCell;
 		for (int i = 0; i < 3; i++) {
-				cells.put(new Position(i, i), new Cell(CellType.SUN));
-				cells.put(new Position(ROWS - i - GRID_PAD, i), new Cell(CellType.SUN));
-				cells.put(new Position(i, COLS - i - GRID_PAD), new Cell(CellType.SUN));
-				cells.put(new Position(ROWS - i - GRID_PAD, COLS - i - GRID_PAD), new Cell(CellType.SUN));
+			tempCell = new Cell(CellType.SUN, new Position(i, i));
+			cells.put(tempCell.getPosition(), tempCell);
+			
+			tempCell = new Cell(CellType.SUN, new Position(ROWS - i - GRID_PAD, i));
+			cells.put(tempCell.getPosition(), tempCell);
+			
+			tempCell = new Cell(CellType.SUN, new Position(i, COLS - i - GRID_PAD));
+			cells.put(tempCell.getPosition(), tempCell);
+			
+			tempCell = new Cell(CellType.SUN, new Position(ROWS - i - GRID_PAD, COLS - i - GRID_PAD));
+			cells.put(tempCell.getPosition(), tempCell);
+			
 		}
 		
 		// Middle cells
-		cells.put(new Position(MID_ROW, 0), new Cell(CellType.SUN));
-		cells.put(new Position(MID_ROW, COLS - GRID_PAD), new Cell(CellType.SUN));
-		cells.put(new Position(0, MID_COL), new Cell(CellType.SUN));
-		cells.put(new Position(ROWS - GRID_PAD, MID_COL), new Cell(CellType.SUN));
+		tempCell = new Cell(CellType.SUN, new Position(MID_ROW, 0));
+		cells.put(tempCell.getPosition(), tempCell);
+		
+		tempCell = new Cell(CellType.SUN, new Position(MID_ROW, COLS - GRID_PAD));
+		cells.put(tempCell.getPosition(), tempCell);
+		
+		tempCell = new Cell(CellType.SUN, new Position(0, MID_COL));
+		cells.put(tempCell.getPosition(), tempCell);
+		
+		tempCell = new Cell(CellType.SUN, new Position(ROWS - GRID_PAD, MID_COL));
+		cells.put(tempCell.getPosition(), tempCell);
+
 		
 		
 		// Initialize the cell with MOON type
-		cells.put(new Position(Math.round(ROWS / 2), Math.round(COLS / 2)), new Cell(CellType.MOON));
+		tempCell = new Cell(CellType.MOON, new Position(Math.round(ROWS / 2), Math.round(COLS / 2)));
+		cells.put(tempCell.getPosition(), tempCell);
 		
 		// Initialize the rest of the cells with SEA type
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
-				Position pos = new Position(row, col);
-				if (!cells.containsKey(pos)) {
-					cells.put(pos, new Cell(CellType.SEA));
+				tempCell = new Cell(CellType.SEA, new Position(row, col));
+				if (!cells.containsKey(tempCell.getPosition())) {
+					cells.put(tempCell.getPosition(), tempCell);
 				}
 			}
 		}
@@ -69,14 +89,18 @@ public class GameBoard {
 		if (!cells.containsKey(position)) {
 			throw new IllegalArgumentException("Position " + position + " does not exist on the game board.");
 			
-		} else if (position.isValid(cells.keySet())) {
+		} else if (!Referee.isPlacementValid(position, tile)) {
 			throw new IllegalArgumentException("Position " + position + " is not valid.");
 			
 		} else if (tile == null) {
 			throw new IllegalArgumentException("Tile cannot be null.");
 
 		}
+		
+		// Set the tile on the cell at the specified position
 		cells.get(position).setTile(tile);
+		Console.println("");
+		Console.printBoard(cells);
 		
 	}
 	

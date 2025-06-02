@@ -2,7 +2,10 @@ package latice.view.controller;
 
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.TransferMode;
+import latice.console.Console;
+import latice.gameboard.GameBoard;
 import latice.view.CellView;
+import latice.view.GameBoardPanel;
 import latice.view.TileView;
 
 public class DnDTileController {
@@ -55,9 +58,15 @@ public class DnDTileController {
 
         targetView.setOnDragDropped(event -> {
             if (draggedTileView != null) {
-                targetView.setTile(draggedTileView);
+            	try {
+            		GameBoard.setTile(targetView.getCell().getPosition(), draggedTileView.getTile());
+            		GameBoardPanel.drawBoard(); // Redraw the board to reflect the new tile placement
+            		event.setDropCompleted(true);
+            	} catch (Exception e) {
+            		Console.printError("Failed to place tile: " + e.getMessage());
+            		event.setDropCompleted(false);
+            	}
                 draggedTileView = null;
-                event.setDropCompleted(true);
             } else {
                 event.setDropCompleted(false);
             }
