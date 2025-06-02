@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import latice.player.Player;
@@ -72,11 +73,6 @@ public class PlayerRackPanel extends HBox {
 
             getChildren().add(tileView);
         }
-    }
-
-    // Remove all tiles from the rack
-    public void clearRack() {
-        getChildren().clear();
     }
 
     // Add a tile image to the rack (used for UI refresh or testing)
