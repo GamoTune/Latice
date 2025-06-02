@@ -11,15 +11,15 @@ public class CellTest {
 
     @Test
     public void testGetTypeNormal() {
-        Cell cell = new Cell(CellType.NORMAL);
-        assertEquals(CellType.NORMAL, cell.getType());
+        Cell cell = new Cell(CellType.SEA);
+        assertEquals(CellType.SEA, cell.getType());
     }
 
 
     @Test
     public void testSetAndGetTile() {
         Tile tile = new Tile(Color.RED, Shape.TURTLE);
-        Cell cell = new Cell(CellType.NORMAL);
+        Cell cell = new Cell(CellType.SEA);
         
         cell.setTile(tile);
         

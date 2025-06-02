@@ -6,6 +6,7 @@ import java.util.Map;
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
+import latice.tile.Tile;
 
 public class GameBoard {
 	static HashMap<Position, Cell> cells;
@@ -44,9 +45,40 @@ public class GameBoard {
 		// Initialize the cell with MOON type
 		cells.put(new Position(Math.round(ROWS / 2), Math.round(COLS / 2)), new Cell(CellType.MOON));
 		
+		// Initialize the rest of the cells with SEA type
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				Position pos = new Position(row, col);
+				if (!cells.containsKey(pos)) {
+					cells.put(pos, new Cell(CellType.SEA));
+				}
+			}
+		}
+		
 	}
 	
 	public static Map<Position, Cell> getCells() {
 		return cells;
 	}
+	
+	public static Cell getCell(Position position) {
+		return cells.get(position);
+	}
+	
+	public static void setTile(Position position, Tile tile) {
+		if (!cells.containsKey(position)) {
+			throw new IllegalArgumentException("Position " + position + " does not exist on the game board.");
+			
+		} else if (position.isValid(cells.keySet())) {
+			throw new IllegalArgumentException("Position " + position + " is not valid.");
+			
+		} else if (tile == null) {
+			throw new IllegalArgumentException("Tile cannot be null.");
+
+		}
+		cells.get(position).setTile(tile);
+		
+	}
+	
+	
 }

@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import latice.player.Player;
 import latice.tile.Tile;
+import latice.view.controller.DnDTileController;
 
 public class PlayerRackPanel extends HBox {
 	
@@ -39,6 +40,9 @@ public class PlayerRackPanel extends HBox {
             tileView.setFitWidth(TILE_SIZE);
             tileView.setFitHeight(TILE_SIZE);
             tileView.setEffect(new DropShadow(5, 2, 2, Color.rgb(0, 0, 0, 0.5))); // Add shadow effect to the tile
+            
+            // Make the tile draggable
+            DnDTileController.makeDraggable(tileView);
 
             tileView.setTranslateY(5);
             getChildren().add(tileView);
