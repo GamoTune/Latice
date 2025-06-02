@@ -88,7 +88,7 @@ public class Console {
 						print(cell.getType().getSymbol());
 					}
 				} else {
-					print(CellType.NORMAL.getSymbol());
+					print(CellType.SEA.getSymbol());
 				}
 				print(" ");
 			}

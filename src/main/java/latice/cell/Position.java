@@ -1,6 +1,7 @@
 package latice.cell;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Position {
     private int x;
@@ -31,4 +32,9 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+	public boolean isValid(Set<Position> otherPositions) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

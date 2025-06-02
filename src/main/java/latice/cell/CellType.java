@@ -5,7 +5,7 @@ import latice.tile.Color;
 public enum CellType {
 	SUN (Color.YELLOW.getCode() + "☀️" + Color.RESET.getCode()),
 	MOON (Color.WHITE.getCode() + "🌙" + Color.RESET.getCode()),
-	NORMAL(Color.CYAN.getCode() + "🟦" + Color.RESET.getCode()),;
+	SEA(Color.CYAN.getCode() + "🟦" + Color.RESET.getCode()),;
 
 	private final String symbol;
 	
@@ -16,6 +16,10 @@ public enum CellType {
 	
 	public String getSymbol() {
 		return symbol;
+	}
+	
+	public String getName() {
+		return this.name().toLowerCase();
 	}
 	
 }

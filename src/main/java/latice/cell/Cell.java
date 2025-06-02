@@ -21,4 +21,8 @@ public class Cell {
 	public Tile getTile() {
 		return tile;
 	}
+	
+	public String getName() {
+		return type.getName();
+	}
 }
