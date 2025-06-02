@@ -1,18 +1,22 @@
 package latice.view.controller;
 
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.TransferMode;
 import latice.console.Console;
 import latice.gameboard.GameBoard;
+import javafx.scene.transform.Scale;
 import latice.view.CellView;
 import latice.view.GameBoardPanel;
 import latice.view.TileView;
+import javafx.scene.paint.Color;
 
 public class DnDTileController {
-	
-	private DnDTileController() {
-		// Private constructor to prevent instantiation
-	}
+
+    private DnDTileController() {
+        // Private constructor to prevent instantiation
+    }
 
     private static TileView draggedTileView = null;
 
@@ -20,15 +24,39 @@ public class DnDTileController {
         tileView.setOnDragDetected(event -> {
             draggedTileView = tileView;
 
-            // Start the drag-and-drop operation
+            // Démarre l’opération drag-and-drop avec transfert MOVE
             var db = tileView.startDragAndDrop(TransferMode.MOVE);
 
-            // Create a drag view (a snapshot of the tile)
-            var snapshot = tileView.snapshot(null, null);
-            db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
+            // === PRENDRE UN SNAPSHOT REDIMENSIONNÉ POUR L’APERÇU DE DRAG ===
+            WritableImage originalSnapshot = tileView.snapshot(null, null);
 
-            // Set the drag content (not used here, but required)
-            var content = new ClipboardContent();
+            // Taille max souhaitée pour l’image de drag (en px)
+            final double maxDragSize = 80;
+
+            // Calcul de l’échelle pour garder le ratio de la tuile
+            double scaleX = maxDragSize / originalSnapshot.getWidth();
+            double scaleY = maxDragSize / originalSnapshot.getHeight();
+            double scale = Math.min(scaleX, scaleY);
+
+            // Paramètres pour snapshot avec transformation scale
+            SnapshotParameters params = new SnapshotParameters();
+            params.setTransform(new Scale(scale, scale));
+            params.setFill(Color.TRANSPARENT);
+
+            // Image redimensionnée (vide au départ)
+            WritableImage resizedSnapshot = new WritableImage(
+                (int) (originalSnapshot.getWidth() * scale),
+                (int) (originalSnapshot.getHeight() * scale)
+            );
+
+            // Re-snapshot la tuile avec mise à l’échelle
+            resizedSnapshot = tileView.snapshot(params, resizedSnapshot);
+
+            // Définit l’image drag view, centrée sur la souris
+            db.setDragView(resizedSnapshot, resizedSnapshot.getWidth() / 2, resizedSnapshot.getHeight() / 2);
+
+            // Contenu du drag (requis même si pas utilisé)
+            ClipboardContent content = new ClipboardContent();
             content.putString("tile");
             db.setContent(content);
 
@@ -74,7 +102,7 @@ public class DnDTileController {
         });
 
         targetView.setOnDragDone(event -> {
-            //TODO: Handle any cleanup after the drag is done
+            // TODO: nettoyer ou actions post drag ici si besoin
             event.consume();
         });
     }
