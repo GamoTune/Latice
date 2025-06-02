@@ -5,9 +5,11 @@ import latice.tile.Tile;
 public class Cell {
 	private final CellType type;
 	private Tile tile;
+	private Position position;
 	
-	public Cell(CellType type) {
+	public Cell(CellType type, Position position) {
 		this.type = type;
+		this.position = position;
 	}
 	
 	public CellType getType() {
@@ -24,5 +26,9 @@ public class Cell {
 	
 	public String getName() {
 		return type.getName();
+	}
+	
+	public Position getPosition() {
+		return position;
 	}
 }

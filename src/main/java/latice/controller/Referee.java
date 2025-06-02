@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import latice.cell.Position;
 import latice.gameboard.GameBoard;
 import latice.player.Player;
 import latice.player.Pool;
@@ -106,13 +107,12 @@ public class Referee {
 
     }
 
-    public boolean isPlacementValid() {
+    public static boolean isPlacementValid(Position position, Tile tile) {
         // TODO: Implement the logic to validate tile placement
-        return false; 
+        return true; 
     }
     
     public GameBoard getGameBoard() {
     	return gameboard;
     }
-    
 }

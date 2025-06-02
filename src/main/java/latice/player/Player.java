@@ -39,4 +39,8 @@ public class Player {
 	public String getName() {
 		return name;
 	}
+	
+	public Integer getPoint() {
+		return point;
+	}
 }	
