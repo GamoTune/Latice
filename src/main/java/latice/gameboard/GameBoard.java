@@ -14,8 +14,8 @@ public class GameBoard {
 	public static HashMap<Position, Cell> cells;
 	public static final int ROWS = 9;
 	public static final int COLS = 9;
-	private static final Integer MID_ROW = Math.round(ROWS / 2);
-    private static final Integer MID_COL = Math.round(COLS / 2);
+	public static final Integer MID_ROW = Math.round(ROWS / 2);
+    public static final Integer MID_COL = Math.round(COLS / 2);
 	
 	public GameBoard() {
 		initializeBoard();

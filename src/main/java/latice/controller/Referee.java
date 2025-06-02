@@ -101,15 +101,51 @@ public class Referee {
     	return chosenPlayer;
     }
 
-    
-    public void showRack() {
-        // TODO: Implement the logic to display a player's rack
-
-    }
 
     public static boolean isPlacementValid(Position position, Tile tile) {
-        // TODO: Implement the logic to validate tile placement
-        return true; 
+    	
+    	String color = tile.getColor();
+    	String shape = tile.getShape();
+    	Position centerPosition = new Position(GameBoard.MID_ROW, GameBoard.MID_COL);
+    	boolean haveNeighbors = false;
+    	
+    	if (GameBoard.cells.containsKey(position)) {
+    		// Check if the center position is occupied by a tile
+    		if (GameBoard.cells.get(centerPosition).getTile() != null) {
+    			
+    			if (GameBoard.cells.get(position).getTile() != null) {
+    				return false; // Position already occupied
+    			}
+    			else {
+    				// Check if the adjacency Tile are the same color or shape
+    				for (Position neighbor : position.getNeighbors()) {
+						if (GameBoard.cells.containsKey(neighbor)) {
+							Tile neighborTile = GameBoard.cells.get(neighbor).getTile();
+							if (neighborTile != null) {
+								haveNeighbors = true; // At least one neighbor exists
+								if (!neighborTile.getColor().equals(color) && !neighborTile.getShape().equals(shape)) {
+									return false; // Adjacent tile does not match color or shape
+								}
+							}
+						}
+					
+					}
+    				if (!haveNeighbors) {
+						return false; // No adjacent tiles to match with
+					}
+    			}
+    			
+    		}
+    		else if (!position.equals(centerPosition)) {
+					return false; // Center position must be occupied by any tile
+				}
+			}
+    		
+    		
+    			 
+		return true; // Position does not exist on the game board
+    	
+        
     }
     
     public GameBoard getGameBoard() {
