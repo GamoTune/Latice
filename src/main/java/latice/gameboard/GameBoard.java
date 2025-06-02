@@ -99,9 +99,6 @@ public class GameBoard {
 		
 		// Set the tile on the cell at the specified position
 		cells.get(position).setTile(tile);
-		Console.println("");
-		Console.printBoard(cells);
-		
 	}
 	
 	
