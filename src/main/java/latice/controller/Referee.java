@@ -142,15 +142,11 @@ public class Referee {
     			
     		}
     		else if (!position.equals(centerPosition)) {
-					return false; // Center position must be occupied by any tile
+					return false; // Center position is empty and the position is not the center
 				}
 			}
     		
-    		
-    			 
-		return true; // Position does not exist on the game board
-    	
-        
+		return true;
     }
     
     public static void pointCalcul(Position position, Tile tile, Player player) {

@@ -52,7 +52,7 @@ public class RefereeTest {
         Rack rack = new Rack();
 
         // Draw 5 tiles
-        referee.draw(rack, pool);
+        Referee.draw(rack, pool);
 
         assertEquals(5, rack.getTiles().size());
         assertEquals(tiles.size() - 5, pool.size());
@@ -101,7 +101,7 @@ public class RefereeTest {
     public void testDrawWithEmptyPool() {
         Pool emptyPool = new Pool(new ArrayList<>());
         Rack rack = new Rack();
-        referee.draw(rack, emptyPool);
+        Referee.draw(rack, emptyPool);
         assertEquals(0, rack.getTiles().size(), "No tiles should be drawn if the pool is empty");
     }
 
@@ -113,7 +113,7 @@ public class RefereeTest {
         Pool smallPool = new Pool(fewTiles);
         Rack rack = new Rack();
 
-        referee.draw(rack, smallPool);
+        Referee.draw(rack, smallPool);
         assertEquals(2, rack.getTiles().size(), "Rack should contain only available tiles");
         assertTrue(smallPool.isEmpty(), "Pool should be empty after drawing all tiles");
     }
