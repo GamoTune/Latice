@@ -148,6 +148,31 @@ public class Referee {
         
     }
     
+    public void point(Position position, Tile tile, Player player) {
+        if (isPlacementValid(position, tile) == true) {
+            switch (position.getNeighbors().size()) {
+                case 2:
+                    // Two neighbors, 1 points
+                    player.addPoint(1);
+                    break;
+                case 3:
+                    // Three neighbors, 2 points
+                    player.addPoint(2);
+                    break;
+                case 4:
+                    // Four neighbors, 4 points
+                    player.addPoint(4);
+                    break;
+                default:
+                    // No neighbors or one neighbors, 0 points
+                    break;
+            }
+        } 
+    }
+    
+    
+    
+    
     public GameBoard getGameBoard() {
     	return gameboard;
     }

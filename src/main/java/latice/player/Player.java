@@ -43,4 +43,8 @@ public class Player {
 	public Integer getPoint() {
 		return point;
 	}
-}	
+	
+    public void addPoint(Integer point) {
+        this.point = this.point + point;
+    }
+}
