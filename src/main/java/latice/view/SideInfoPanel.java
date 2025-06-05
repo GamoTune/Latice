@@ -13,35 +13,41 @@ public class SideInfoPanel extends VBox {
     private Label cardsLeftLabel;
 
     public SideInfoPanel(String playerName, int score, int cardsLeft) {
+        // Set alignment, spacing, padding and fixed size for panel
         setAlignment(Pos.CENTER);
-        setSpacing(15);
-        setPadding(new Insets(30));
+        setSpacing(18);
+        setPadding(new Insets(32));
         setPrefSize(300, 300);
         setMaxSize(300, 300);
         setMinSize(300, 300);
-        setStyle("-fx-background-color: rgba(0,16,34,0.8); -fx-background-radius: 20;");
-        setEffect(new DropShadow(12, Color.BLACK));
 
+        // Background color, rounded corners and border styling
+        setStyle(
+            "-fx-background-color: rgba(0,16,34,0.85);" +
+            "-fx-background-radius: 24;" +
+            "-fx-border-color: #00bfff;" +  // light sky blue border
+            "-fx-border-width: 1.5;" +
+            "-fx-border-radius: 24;"
+        );
+        setEffect(new DropShadow(18, Color.rgb(0, 0, 0, 0.7))); // subtle shadow effect
+
+        // Player name label styling
         Label nameLabel = new Label(playerName);
-        nameLabel.setFont(Font.font("Calibri", 36));
-        nameLabel.setTextFill(Color.WHITE);
+        nameLabel.setFont(Font.font("Segoe UI", 38));
+        nameLabel.setTextFill(Color.web("#ffffff"));
+        nameLabel.setStyle("-fx-font-weight: bold;");
 
+        // Score label styling
         scoreLabel = new Label("Points : " + score);
-        scoreLabel.setFont(Font.font("Calibri", 30));
-        scoreLabel.setTextFill(Color.WHITE);
+        scoreLabel.setFont(Font.font("Segoe UI", 28));
+        scoreLabel.setTextFill(Color.web("#f8f8f8"));
 
+        // Cards left label styling
         cardsLeftLabel = new Label("Cartes : " + cardsLeft);
-        cardsLeftLabel.setFont(Font.font("Calibri", 30));
-        cardsLeftLabel.setTextFill(Color.WHITE);
+        cardsLeftLabel.setFont(Font.font("Segoe UI", 28));
+        cardsLeftLabel.setTextFill(Color.web("#f8f8f8"));
 
+        // Add all labels to the panel
         getChildren().addAll(nameLabel, scoreLabel, cardsLeftLabel);
-    }
-
-    public void updateScore(int score) {
-        scoreLabel.setText("Points : " + score);
-    }
-
-    public void updateCardsLeft(int cardsLeft) {
-        cardsLeftLabel.setText("Cartes : " + cardsLeft);
     }
 }

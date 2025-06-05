@@ -14,56 +14,63 @@ import latice.view.controller.DnDTileController;
 
 public class PlayerRackPanel extends HBox {
 
-    private static final int RACK_WIDTH = 420;
-    private static final int RACK_HEIGHT = 110;
-    private static final int TILE_SIZE = 64;
-    private static final int RACK_SIZE = 5;
+    private static final int RACK_WIDTH = 520;    // Width of the rack container
+    private static final int RACK_HEIGHT = 130;   // Height of the rack container
+    private static final int TILE_SIZE = 75;      // Size of each tile image
+    private static final int RACK_SIZE = 5;       // Maximum number of tiles in rack
 
     public PlayerRackPanel(Player player) {
-        setSpacing(12);
-        setPadding(new Insets(12, 12, 24, 12));
+        setSpacing(15); // Space between tiles
+        setPadding(new Insets(15, 15, 30, 15)); // Padding around rack
+
+        // Background gradient, border and rounded corners styling
         setStyle(
-            "-fx-background-color: linear-gradient(to bottom, #d8b46a, #a87f4a);" +
-            "-fx-border-radius: 16;" +
-            "-fx-background-radius: 16;" +
-            "-fx-border-color: #654321;" +
-            "-fx-border-width: 2;"
+            "-fx-background-color: linear-gradient(to bottom, #f2c94c, #c98b00);" +
+            "-fx-border-color: #fff59d;" +
+            "-fx-border-width: 2;" +
+            "-fx-background-radius: 24;" +
+            "-fx-border-radius: 24;" +
+            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 0, 4);"
         );
-        setEffect(new DropShadow(12, 4, 4, Color.rgb(0, 0, 0, 0.65)));
+
+        // Additional drop shadow effect for depth
+        setEffect(new DropShadow(30, 0, 6, Color.rgb(0, 0, 0, 0.6)));
+
         setAlignment(Pos.CENTER);
         setMaxWidth(RACK_WIDTH);
         setPrefHeight(RACK_HEIGHT);
 
-        displayRack(player);
-        
+        displayRack(player); // Populate rack with player's tiles
     }
-    
-    
+
+    // Clear all tiles from the rack UI
     public void clearRack() {
-		getChildren().clear();
-	}
-    
+        getChildren().clear();
+    }
+
+    // Render the tiles from the player's rack with drag and hover effects
     public void displayRack(Player player) {
-    	getChildren().clear();
-		
-		// Loop through each tile in the player's rack
-    	for (Tile tile: player.getRack().getTiles()) {
-        	
-        	TileView tileView = new TileView(tile);
+        getChildren().clear();
+
+        for (Tile tile : player.getRack().getTiles()) {
+            TileView tileView = new TileView(tile);
             tileView.setFitWidth(TILE_SIZE);
             tileView.setFitHeight(TILE_SIZE);
+
             DropShadow dropShadow = new DropShadow(6, 3, 3, Color.rgb(0, 0, 0, 0.6));
             tileView.setEffect(dropShadow);
             DnDTileController.makeDraggable(tileView);
-            tileView.setTranslateY(6);
+            tileView.setTranslateY(6); // Slight vertical offset for style
 
-            // Highlight on hover
+            // Hover effect: highlight with gold glow
             tileView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
-                dropShadow.setRadius(12);
+                dropShadow.setRadius(10);
                 dropShadow.setOffsetX(0);
                 dropShadow.setOffsetY(0);
-                dropShadow.setColor(Color.rgb(50, 150, 255, 0.9));
+                dropShadow.setColor(Color.rgb(255, 215, 0, 0.85)); // gold color
             });
+
+            // Hover exit: revert shadow to original
             tileView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
                 dropShadow.setRadius(6);
                 dropShadow.setOffsetX(3);
@@ -75,22 +82,26 @@ public class PlayerRackPanel extends HBox {
         }
     }
 
-    // Add a tile image to the rack (used for UI refresh or testing)
+    // Add a new tile image to the rack if not full, with hover effects
     public void addTile(Image tileImage) {
         if (getChildren().size() < RACK_SIZE) {
             ImageView tileView = new ImageView(tileImage);
             tileView.setFitWidth(TILE_SIZE);
             tileView.setFitHeight(TILE_SIZE);
+
             DropShadow dropShadow = new DropShadow(6, 3, 3, Color.rgb(0, 0, 0, 0.6));
             tileView.setEffect(dropShadow);
             tileView.setTranslateY(6);
 
+            // Hover effect: highlight with blue glow
             tileView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
-                dropShadow.setRadius(12);
+                dropShadow.setRadius(10);
                 dropShadow.setOffsetX(0);
                 dropShadow.setOffsetY(0);
-                dropShadow.setColor(Color.rgb(50, 150, 255, 0.9));
+                dropShadow.setColor(Color.rgb(60, 180, 255, 0.8)); // blue color
             });
+
+            // Hover exit: revert shadow to original
             tileView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
                 dropShadow.setRadius(6);
                 dropShadow.setOffsetX(3);
@@ -101,6 +112,4 @@ public class PlayerRackPanel extends HBox {
             getChildren().add(tileView);
         }
     }
-    
-    
 }
