@@ -30,4 +30,8 @@ public class Rack {
     public List<Tile> getTiles() {
         return tiles;
     }
+    
+    public int size() {
+		return tiles.size();
+	}
 }
