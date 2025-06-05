@@ -6,7 +6,6 @@ import java.util.Map;
 import latice.cell.Cell;
 import latice.cell.CellType;
 import latice.cell.Position;
-import latice.console.Console;
 import latice.controller.Referee;
 import latice.tile.Tile;
 

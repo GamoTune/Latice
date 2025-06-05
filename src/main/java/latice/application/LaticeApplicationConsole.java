@@ -27,6 +27,7 @@ public class LaticeApplicationConsole {
 		while (Boolean.TRUE.equals(isValide) == false) {
 			choice = Console.ask("Enter your choice (1 or 2): ");
 			
+			// Console if the choice is 1
 			if (choice.equals("1")) {
 				isValide = true;
 				Console.println("You chose Console mode.");
@@ -35,7 +36,8 @@ public class LaticeApplicationConsole {
 				// Start the console game
 				startConsoleGame();
 				
-				
+			
+			// GUI if the choice is 2
 			} else if (choice.equals("2")) {
 				isValide = true;
 				Console.println("You chose GUI mode.");
