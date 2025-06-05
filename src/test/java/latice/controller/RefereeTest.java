@@ -141,11 +141,8 @@ public class RefereeTest {
         Position center = new Position(GameBoard.MID_ROW, GameBoard.MID_COL);
         GameBoard.cells.get(center).setTile(new Tile(Color.BLUE, Shape.BIRD)); // manually set tile at center
 
-        Position neighbor = new Position(center.x() + 1, center.y());
-        GameBoard.cells.get(neighbor).setTile(new Tile(Color.RED, Shape.DOLPHIN)); // incompatible
-
-        Position testPosition = new Position(center.x() + 2, center.y());
-        Tile testTile = new Tile(Color.GREEN, Shape.FEATHER);
+        Position testPosition = new Position(center.x() + 1, center.y());
+        Tile testTile = new Tile(Color.GREEN, Shape.FEATHER); // incompatible
 
         GameBoard.cells.get(testPosition); // make sure it exists
 
@@ -157,10 +154,7 @@ public class RefereeTest {
         Position center = new Position(GameBoard.MID_ROW, GameBoard.MID_COL);
         GameBoard.cells.get(center).setTile(new Tile(Color.BLUE, Shape.BIRD)); // center occupied
 
-        Position neighbor = new Position(center.x() + 1, center.y());
-        GameBoard.cells.get(neighbor).setTile(new Tile(Color.RED, Shape.BIRD)); // same shape
-
-        Position testPosition = new Position(center.x() + 2, center.y());
+        Position testPosition = new Position(center.x() + 1, center.y());
         Tile testTile = new Tile(Color.YELLOW, Shape.BIRD);
 
         GameBoard.cells.get(testPosition); // ensure exists
