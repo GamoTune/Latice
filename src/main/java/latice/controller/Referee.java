@@ -201,7 +201,7 @@ public class Referee {
     	}
     }
     
-    public static void playTurn(Position position, Tile tile) {
+    public static void doAction(Position position, Tile tile) {
 		Player currentPlayer = playersCycle.get(currentPlayerIndex);
 		currentPlayer.playTile(currentPlayer.getRack().getTiles().indexOf(tile));
 		GameBoard.setTile(position, tile);

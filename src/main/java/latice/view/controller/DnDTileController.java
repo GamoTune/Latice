@@ -89,7 +89,7 @@ public class DnDTileController {
             if (draggedTileView != null) {
             	try {
             		// Play the tile on the target cell
-            		Referee.playTurn(targetView.getCell().getPosition(), draggedTileView.getTile());
+            		Referee.doAction(targetView.getCell().getPosition(), draggedTileView.getTile());
             		GameBoardPanel.drawBoard(); // Redraw the board to reflect the new tile placement
             		PlayerRackPanel.deleteTile(draggedTileView); // Remove the tile from the player's rack
             		event.setDropCompleted(true);
