@@ -19,10 +19,12 @@ public class Referee {
 	private final GameBoard gameboard;
 
     public List<Player> players;
-
+    public List<Player> playersCycle = new ArrayList<>();
+    
     
     private final Integer RACKSIZE = 5;
     private final Integer NB_PLAYER = 2; // Number of players, can be adjusted as needed
+    public int currentPlayerIndex = 0; // Index of the current player in the cycle
     
     // Constructor to initialize the referee with a list of players
     public Referee() {
@@ -42,7 +44,7 @@ public class Referee {
 			draw(player.getRack(), player.getPool());
 		}
     	
-    	
+    	createCycle();
     	
     }
     
@@ -148,8 +150,8 @@ public class Referee {
         
     }
     
-    public void point(Position position, Tile tile, Player player) {
-        if (isPlacementValid(position, tile) == true) {
+    public void pointCalcul(Position position, Tile tile, Player player) {
+        if (isPlacementValid(position, tile)) {
             switch (position.getNeighbors().size()) {
                 case 2:
                     // Two neighbors, 1 points
@@ -169,9 +171,33 @@ public class Referee {
             }
         } 
     }
+
+    // Method to end the game and determine the winner(s)
+    public void gameEnd() {
+    	//TODO
+    }
     
-    
-    
+    // Method to end the turn for the current player
+    public void turnEnd() {
+    	if (currentPlayerIndex < playersCycle.size() - 1) {
+			currentPlayerIndex++;
+		} else {
+			currentPlayerIndex = 0; // Reset to the first player
+		}
+    }
+
+    // Method to create a cycle of players 
+    public void createCycle() {
+    	while (playersCycle.size() != NB_PLAYER){
+    		Player currentPlayer = choosePlayer();
+    		if (!playersCycle.contains(currentPlayer)) {
+				playersCycle.add(currentPlayer);
+			} else {
+				continue; // If player already in the list, skip to next iteration
+			}
+    	}
+    }
+	
     
     public GameBoard getGameBoard() {
     	return gameboard;
