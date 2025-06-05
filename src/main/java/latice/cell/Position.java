@@ -33,6 +33,11 @@ public class Position {
         return Objects.hash(x, y);
     }
     
+    @Override
+    public String toString() {
+		return "Position{" + "x=" + x + ", y=" + y + '}';
+	}
+    
     public List<Position> getNeighbors() {
 		return List.of(
 			new Position(x - 1, y), // Left
