@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import latice.cell.CellType;
 import latice.cell.Position;
 import latice.gameboard.GameBoard;
 import latice.player.Player;
@@ -152,6 +153,9 @@ public class Referee {
     
     public void pointCalcul(Position position, Tile tile, Player player) {
         if (isPlacementValid(position, tile)) {
+        	if (GameBoard.getCell(position).getType()== CellType.SUN) {
+        		player.addPoint(2); // Add 1 point for placing a tile on a SUN cell
+        	}
             switch (position.getNeighbors().size()) {
                 case 2:
                     // Two neighbors, 1 points
