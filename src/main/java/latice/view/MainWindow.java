@@ -37,13 +37,22 @@ public class MainWindow extends Application {
         backgroundMediaView.setEffect(new GaussianBlur(10));
 
         Referee referee = new Referee();
+        
+        List<Player> players = Referee.playersCycle;
+        
         GameBoardPanel gameBoardPanel = new GameBoardPanel();
-        PlayerRackPanel playerRackPanel = new PlayerRackPanel(referee.players.get(0));
+        
+        // Create the player rack panel for the first player
+        PlayerRackPanel playerRackPanel = new PlayerRackPanel(players.get(0));
 
-        SideInfoPanel sideInfoPlayer1 = new SideInfoPanel("Joueur 1", 10, 5);
-        SideInfoPanel sideInfoPlayer2 = new SideInfoPanel("Joueur 2", 8, 3);
 
-        Label currentPlayerLabel = new Label("Player 1");
+        SideInfoPanel sideInfoPlayer1 = new SideInfoPanel(players.get(0));
+
+        SideInfoPanel sideInfoPlayer2 = new SideInfoPanel(players.get(1));
+
+
+        
+        Label currentPlayerLabel = new Label(players.get(0).getName() + "'s Turn");
         currentPlayerLabel.setStyle(
             "-fx-font-size: 24px;" +
             "-fx-font-weight: bold;" +
@@ -102,6 +111,23 @@ public class MainWindow extends Application {
                 "-fx-cursor: hand;"
             );
         });
+        
+        endTurnButton.setOnAction(e -> {
+			// End the turn for the current player
+			Referee.turnEnd();
+			// Update the current player label
+			currentPlayerLabel.setText(Referee.playersCycle.get(Referee.currentPlayerIndex).getName() + "'s Turn");
+			
+			// Update the side info panels for both players
+			sideInfoPlayer1.updateScore(Referee.playersCycle.get(0));
+			sideInfoPlayer1.updateCardsLeft(Referee.playersCycle.get(0));
+			sideInfoPlayer2.updateScore(Referee.playersCycle.get(1));
+			sideInfoPlayer2.updateCardsLeft(Referee.playersCycle.get(1));
+			
+			// Update the rack panel for the current player
+			playerRackPanel.displayRack(Referee.playersCycle.get(Referee.currentPlayerIndex));
+
+		});
 
         HBox rackAndButton = new HBox(20, rackWithLabel, endTurnButton);
         rackAndButton.setAlignment(Pos.CENTER);
