@@ -1,5 +1,7 @@
 package latice.player;
 
+import latice.tile.Tile;
+
 public class Player {
 	private final String name;
 	private Integer point;
@@ -46,5 +48,9 @@ public class Player {
 	
     public void addPoint(Integer point) {
         this.point = this.point + point;
+    }
+    
+    public Tile playTile(int index) {
+    	return rack.removeTile(index);
     }
 }
