@@ -112,4 +112,11 @@ public class PlayerRackPanel extends HBox {
             getChildren().add(tileView);
         }
     }
+    
+    public static void deleteTile(TileView tileView) {
+		if (tileView != null && tileView.getParent() instanceof PlayerRackPanel) {
+			PlayerRackPanel rackPanel = (PlayerRackPanel) tileView.getParent();
+			rackPanel.getChildren().remove(tileView);
+		}
+	}
 }
