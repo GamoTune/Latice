@@ -173,7 +173,6 @@ public class Referee {
         	    }
         	}
         	
-        	System.out.println(validNeighborsCount);
             switch (validNeighborsCount) {
                 case 2:
                     // Two neighbors, 1 points
