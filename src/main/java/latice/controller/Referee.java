@@ -7,6 +7,7 @@ import java.util.Random;
 
 import latice.cell.CellType;
 import latice.cell.Position;
+import latice.console.Console;
 import latice.gameboard.GameBoard;
 import latice.player.Player;
 import latice.player.Pool;
@@ -20,12 +21,12 @@ public class Referee {
 	private final GameBoard gameboard;
 
     public List<Player> players;
-    public List<Player> playersCycle = new ArrayList<>();
+    public static List<Player> playersCycle = new ArrayList<>();
     
     
-    private final Integer RACKSIZE = 5;
-    private final Integer NB_PLAYER = 2; // Number of players, can be adjusted as needed
-    public int currentPlayerIndex = 0; // Index of the current player in the cycle
+    private static final Integer RACKSIZE = 5;
+    private static final Integer NB_PLAYER = 2; // Number of players, can be adjusted as needed
+    public static int currentPlayerIndex = 0; // Index of the current player in the cycle
     
     // Constructor to initialize the referee with a list of players
     public Referee() {
@@ -50,13 +51,11 @@ public class Referee {
     }
     
     // Draw tiles from the pool and add them to the player's rack
-    public Rack draw(Rack rack, Pool pool) {
+    public static Rack draw(Rack rack, Pool pool) {
     	
-        for (int i = 0; i < RACKSIZE; i++) {
-            if (!pool.isEmpty()) {
-                Tile tile = pool.drawTile();
-                rack.addTile(tile);
-            }
+        while (rack.size() < RACKSIZE && !pool.isEmpty()) {
+            Tile tile = pool.drawTile();
+            rack.addTile(tile);
         }
         return rack;
     }
@@ -151,7 +150,7 @@ public class Referee {
         
     }
     
-    public void pointCalcul(Position position, Tile tile, Player player) {
+    public static void pointCalcul(Position position, Tile tile, Player player) {
         if (isPlacementValid(position, tile)) {
         	if (GameBoard.getCell(position).getType()== CellType.SUN) {
         		player.addPoint(2); // Add 1 point for placing a tile on a SUN cell
@@ -182,7 +181,7 @@ public class Referee {
     }
     
     // Method to end the turn for the current player
-    public void turnEnd() {
+    public static void turnEnd() {
     	if (currentPlayerIndex < playersCycle.size() - 1) {
 			currentPlayerIndex++;
 		} else {
@@ -201,6 +200,14 @@ public class Referee {
 			}
     	}
     }
+    
+    public static void playTurn(Position position, Tile tile) {
+		Player currentPlayer = playersCycle.get(currentPlayerIndex);
+		currentPlayer.playTile(currentPlayer.getRack().getTiles().indexOf(tile));
+		GameBoard.setTile(position, tile);
+		pointCalcul(position, tile, currentPlayer);
+		Referee.draw(currentPlayer.getRack(), currentPlayer.getPool());
+	}
 	
     
     public GameBoard getGameBoard() {
