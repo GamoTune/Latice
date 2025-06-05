@@ -27,6 +27,9 @@ public class Referee {
     private static final Integer RACKSIZE = 5;
     private static final Integer NB_PLAYER = 2; // Number of players, can be adjusted as needed
     public static int currentPlayerIndex = 0; // Index of the current player in the cycle
+    public static int turnCount = 0; // Counter for the number of turns taken
+    public static final int MAX_TURN = 10; // Example maximum number of turns, can be adjusted as needed
+    public static boolean gameOver = false; // Flag to indicate if the game is over
     
     // Constructor to initialize the referee with a list of players
     public Referee() {
@@ -195,9 +198,29 @@ public class Referee {
   
 
     // Method to end the game and determine the winner(s)
-    public void gameEnd() {
-    	
+    public static void gameEnd() {
+    	gameOver = true; // Set the game over flag 
+
+        Player winner = null;
+        int maxTilesPlaced = -1;
+        
+        for (Player player : playersCycle) {
+            int tilesPlaced = player.getTilesPlaced();
+            if (tilesPlaced > maxTilesPlaced) {
+                maxTilesPlaced = tilesPlaced;
+                winner = player;
+            }
+        }
+        
+        if (winner != null) {
+            Console.println("Game Over! The winner is " + winner.getName() + " with " + maxTilesPlaced + " tiles placed.");
+        } else {
+            Console.println("Game Over! No winner could be determined.");
+        }
     }
+    	
+    	
+   
     
     // Method to end the turn for the current player
     public static void turnEnd() {
@@ -205,6 +228,11 @@ public class Referee {
 			currentPlayerIndex++;
 		} else {
 			currentPlayerIndex = 0; // Reset to the first player
+		}
+    	turnCount++;
+		
+		if (turnCount == MAX_TURN ) { 
+			gameEnd();
 		}
     }
 
@@ -221,10 +249,17 @@ public class Referee {
     }
     
     public static void doAction(Position position, Tile tile) {
+    	// Check if the game is over before performing any action
+    	if (gameOver) {
+			Console.println("The game is over. No more actions can be performed.");
+			return;
+		}
+    	
 		Player currentPlayer = playersCycle.get(currentPlayerIndex);
 		GameBoard.setTile(position, tile);
 		pointCalcul(position, tile, currentPlayer);
 		currentPlayer.playTile(currentPlayer.getRack().getTiles().indexOf(tile));
+		currentPlayer.incrementTilesPlaced();
 		Referee.draw(currentPlayer.getRack(), currentPlayer.getPool());
 	}
 	
