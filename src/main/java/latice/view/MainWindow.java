@@ -1,7 +1,6 @@
 package latice.view;
 
 import java.net.URL;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,10 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -24,7 +20,6 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Load background video
         URL videoUrl = getClass().getResource("/assets/bg_video.mp4");
         if (videoUrl == null) {
             Console.printError("Background video not found!");
@@ -39,9 +34,8 @@ public class MainWindow extends Application {
         backgroundMediaView.setPreserveRatio(false);
         backgroundMediaView.fitWidthProperty().bind(primaryStage.widthProperty());
         backgroundMediaView.fitHeightProperty().bind(primaryStage.heightProperty());
-        backgroundMediaView.setEffect(new GaussianBlur(10)); // Apply blur effect to background
+        backgroundMediaView.setEffect(new GaussianBlur(10));
 
-        // Initialize game components
         Referee referee = new Referee();
         GameBoardPanel gameBoardPanel = new GameBoardPanel();
         PlayerRackPanel playerRackPanel = new PlayerRackPanel(referee.players.get(0));
@@ -49,7 +43,6 @@ public class MainWindow extends Application {
         SideInfoPanel sideInfoPlayer1 = new SideInfoPanel("Joueur 1", 10, 5);
         SideInfoPanel sideInfoPlayer2 = new SideInfoPanel("Joueur 2", 8, 3);
 
-        // Current player label styling
         Label currentPlayerLabel = new Label("Player 1");
         currentPlayerLabel.setStyle(
             "-fx-font-size: 24px;" +
@@ -59,15 +52,12 @@ public class MainWindow extends Application {
         );
         currentPlayerLabel.setAlignment(Pos.CENTER);
 
-        // Container for player's rack, centered vertically
         VBox rackContainer = new VBox(playerRackPanel);
         rackContainer.setAlignment(Pos.CENTER);
 
-        // Container combining player label and rack
         VBox rackWithLabel = new VBox(25, currentPlayerLabel, rackContainer);
         rackWithLabel.setAlignment(Pos.TOP_CENTER);
 
-        // "End Turn" button with styling and hover effects
         Button endTurnButton = new Button("Fin de Tour");
         endTurnButton.setStyle(
             "-fx-font-size: 16px;" +
@@ -113,47 +103,64 @@ public class MainWindow extends Application {
             );
         });
 
-        // Horizontal container for rack + button, vertically centered
         HBox rackAndButton = new HBox(20, rackWithLabel, endTurnButton);
         rackAndButton.setAlignment(Pos.CENTER);
-
-        // Adjust vertical position of the "End Turn" button
         HBox.setMargin(endTurnButton, new Insets(55, 0, 0, 0));
 
-        // Bottom section container with padding to shift content right
         HBox bottomContent = new HBox(rackAndButton);
-        bottomContent.setPadding(new Insets(0, 130, 170, 300)); // Left padding increased to shift right
+        bottomContent.setPadding(new Insets(0, 130, 170, 300));
         bottomContent.setAlignment(Pos.CENTER);
 
-        // Main layout setup
         BorderPane root = new BorderPane();
+
+        gameBoardPanel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        gameBoardPanel.prefWidthProperty().bind(root.widthProperty().multiply(0.5));
+        gameBoardPanel.prefHeightProperty().bind(root.heightProperty());
 
         HBox boardWrapper = new HBox(gameBoardPanel);
         boardWrapper.setAlignment(Pos.CENTER);
         root.setCenter(boardWrapper);
         root.setBottom(bottomContent);
 
-        // Left side panel setup
         StackPane leftStack = new StackPane(sideInfoPlayer1);
         leftStack.setPrefWidth(300);
         leftStack.setAlignment(Pos.CENTER);
         BorderPane.setMargin(leftStack, new Insets(0, 10, 0, 140));
         root.setLeft(leftStack);
 
-        // Right side panel setup
         StackPane rightStack = new StackPane(sideInfoPlayer2);
         rightStack.setPrefWidth(300);
         rightStack.setAlignment(Pos.CENTER);
         BorderPane.setMargin(rightStack, new Insets(0, 140, 0, 10));
         root.setRight(rightStack);
 
-        // Stack background video behind main UI
+        Button fullscreenToggle = new Button("⛶");
+        fullscreenToggle.setStyle(
+            "-fx-font-size: 64px;" +
+            "-fx-background-color: transparent;" +
+            "-fx-text-fill: white;" +
+            "-fx-cursor: hand;"
+        );
+
+        fullscreenToggle.setOnAction(e -> {
+            boolean isFull = primaryStage.isFullScreen();
+            primaryStage.setFullScreen(!isFull);
+            fullscreenToggle.setText(isFull ? "⛶" : "❌");
+        });
+
+        HBox topRightControls = new HBox(fullscreenToggle);
+        topRightControls.setAlignment(Pos.TOP_RIGHT);
+        topRightControls.setPadding(new Insets(10));
+
+        root.setTop(topRightControls);
+
         StackPane mainContainer = new StackPane(backgroundMediaView, root);
 
         Scene scene = new Scene(mainContainer);
+
         primaryStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
-        primaryStage.setMaximized(true);
+        primaryStage.setFullScreen(false);
         primaryStage.setTitle("Plateau de jeu Latice");
         primaryStage.setScene(scene);
         primaryStage.show();
