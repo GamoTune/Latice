@@ -1,5 +1,6 @@
 package latice.application;
 
+import latice.cell.Position;
 import latice.console.Console;
 import latice.controller.Referee;
 import latice.gameboard.GameBoard;
@@ -60,13 +61,52 @@ public class LaticeApplicationConsole {
 		
 		Console.println("Game started in console mode.");
 		
-		// Print the initial game board
-		Console.printBoard(GameBoard.getCells());
 		
+		// Start the game loop
+		boolean gameRunning = true;
 		
-		// Print the first player's rack
-		Console.println("Player 1's Rack:");
-		Console.printRack(referee.players.get(0).getRack());
+		int playerTileIndex = -1; // Index of the tile the player wants to place
+		
+		String playerMove = "";
+		while (gameRunning) {
+			// Print the current game state
+			Console.printBoard(GameBoard.getCells());
+			
+			// Ask the player for the tile they want to place
+			Console.printRack(referee.players.get(0).getRack());
+			try {
+				playerTileIndex = Integer.parseInt(Console.ask("Enter the index of the tile you want to place (1 to " + referee.players.get(0).getRack().getTiles().size() + "): "));
+			} catch (NumberFormatException e) {
+				Console.printError("Invalid input. Please enter a valid index.");
+				continue; // Skip to the next iteration if input is invalid
+			}
+			
+		
+			// Ask the player for their move
+			playerMove = Console.ask("Enter your move (e.g., '11 ; 42 ; 36'), or type 'exit' to quit the game: ");
+			
+			if (playerMove.equalsIgnoreCase("exit")) {
+				Console.println("Exiting the game. Goodbye!");
+				gameRunning = false;
+			} else if (playerMove.isEmpty()) {
+				Console.printError("Move cannot be empty. Please try again.");
+			} else {
+				// Process the player's move
+				int x = playerMove.charAt(0) - '0'; // Convert char to int
+				int y = playerMove.charAt(1) - '0';
+				Console.println("Placing tile at position: (" + x + ", " + y + ")");
+				Position movePosition = new Position(x - 1, y - 1);
+				
+				// Try to place the tile
+				try {
+					GameBoard.setTile(movePosition, referee.players.get(0).getRack().getTiles().get(playerTileIndex - 1));
+				} catch (IllegalArgumentException e) {
+					Console.printError("Error placing tile: " + e.getMessage());
+					continue; // Skip to the next iteration if placement fails
+				}
+			}
+			
+		}
 	}
 
 }
