@@ -4,13 +4,14 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.TransferMode;
-import latice.console.Console;
-import latice.gameboard.GameBoard;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
+import latice.console.Console;
+import latice.controller.Referee;
 import latice.view.CellView;
 import latice.view.GameBoardPanel;
+import latice.view.PlayerRackPanel;
 import latice.view.TileView;
-import javafx.scene.paint.Color;
 
 public class DnDTileController {
 
@@ -24,38 +25,38 @@ public class DnDTileController {
         tileView.setOnDragDetected(event -> {
             draggedTileView = tileView;
 
-            // Démarre l’opération drag-and-drop avec transfert MOVE
+            // Start the drag-and-drop operation
             var db = tileView.startDragAndDrop(TransferMode.MOVE);
 
-            // === PRENDRE UN SNAPSHOT REDIMENSIONNÉ POUR L’APERÇU DE DRAG ===
+            // Capture the tile's snapshot
             WritableImage originalSnapshot = tileView.snapshot(null, null);
 
-            // Taille max souhaitée pour l’image de drag (en px)
+            // Set the maximum size for the drag view
             final double maxDragSize = 80;
 
-            // Calcul de l’échelle pour garder le ratio de la tuile
+            // Set the scale factor based on the original snapshot size
             double scaleX = maxDragSize / originalSnapshot.getWidth();
             double scaleY = maxDragSize / originalSnapshot.getHeight();
             double scale = Math.min(scaleX, scaleY);
 
-            // Paramètres pour snapshot avec transformation scale
+            // Change the snapshot parameters to include scaling
             SnapshotParameters params = new SnapshotParameters();
             params.setTransform(new Scale(scale, scale));
             params.setFill(Color.TRANSPARENT);
 
-            // Image redimensionnée (vide au départ)
+            // Create a new writable image with the scaled size	
             WritableImage resizedSnapshot = new WritableImage(
                 (int) (originalSnapshot.getWidth() * scale),
                 (int) (originalSnapshot.getHeight() * scale)
             );
 
-            // Re-snapshot la tuile avec mise à l’échelle
+            // Take the snapshot with the new parameters
             resizedSnapshot = tileView.snapshot(params, resizedSnapshot);
 
-            // Définit l’image drag view, centrée sur la souris
+            // Set the drag view to the resized snapshot
             db.setDragView(resizedSnapshot, resizedSnapshot.getWidth() / 2, resizedSnapshot.getHeight() / 2);
 
-            // Contenu du drag (requis même si pas utilisé)
+            // Create clipboard content (this is necessary for the drag-and-drop operation)
             ClipboardContent content = new ClipboardContent();
             content.putString("tile");
             db.setContent(content);
@@ -87,8 +88,10 @@ public class DnDTileController {
         targetView.setOnDragDropped(event -> {
             if (draggedTileView != null) {
             	try {
-            		GameBoard.setTile(targetView.getCell().getPosition(), draggedTileView.getTile());
+            		// Play the tile on the target cell
+            		Referee.playTurn(targetView.getCell().getPosition(), draggedTileView.getTile());
             		GameBoardPanel.drawBoard(); // Redraw the board to reflect the new tile placement
+            		PlayerRackPanel.deleteTile(draggedTileView); // Remove the tile from the player's rack
             		event.setDropCompleted(true);
             	} catch (Exception e) {
             		Console.printError("Failed to place tile: " + e.getMessage());
@@ -98,11 +101,6 @@ public class DnDTileController {
             } else {
                 event.setDropCompleted(false);
             }
-            event.consume();
-        });
-
-        targetView.setOnDragDone(event -> {
-            // TODO: nettoyer ou actions post drag ici si besoin
             event.consume();
         });
     }
