@@ -203,9 +203,9 @@ public class Referee {
     
     public static void doAction(Position position, Tile tile) {
 		Player currentPlayer = playersCycle.get(currentPlayerIndex);
-		currentPlayer.playTile(currentPlayer.getRack().getTiles().indexOf(tile));
 		GameBoard.setTile(position, tile);
 		pointCalcul(position, tile, currentPlayer);
+		currentPlayer.playTile(currentPlayer.getRack().getTiles().indexOf(tile));
 		Referee.draw(currentPlayer.getRack(), currentPlayer.getPool());
 	}
 	

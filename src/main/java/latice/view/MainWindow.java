@@ -23,6 +23,9 @@ import latice.controller.Referee;
 import latice.player.Player;
 
 public class MainWindow extends Application {
+	
+	public static SideInfoPanel sideInfoPlayer1;
+	public static SideInfoPanel sideInfoPlayer2;
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,9 +55,9 @@ public class MainWindow extends Application {
         PlayerRackPanel playerRackPanel = new PlayerRackPanel(players.get(0));
 
 
-        SideInfoPanel sideInfoPlayer1 = new SideInfoPanel(players.get(0));
+        sideInfoPlayer1 = new SideInfoPanel(players.get(0));
 
-        SideInfoPanel sideInfoPlayer2 = new SideInfoPanel(players.get(1));
+        sideInfoPlayer2 = new SideInfoPanel(players.get(1));
 
 
         
