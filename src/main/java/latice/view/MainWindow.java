@@ -6,15 +6,16 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import latice.console.Console;
 import latice.controller.Referee;
@@ -23,36 +24,32 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Load and configure background image
-        URL imageUrl = getClass().getResource("/assets/Oceanbackground.png");
-        if (imageUrl == null) {
-            Console.printError("Background image not found!");
+        // Load background video
+        URL videoUrl = getClass().getResource("/assets/bg_video.mp4");
+        if (videoUrl == null) {
+            Console.printError("Background video not found!");
             return;
         }
-        Image backgroundImage = new Image(imageUrl.toExternalForm());
-        ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setPreserveRatio(false);
-        backgroundImageView.fitWidthProperty().bind(primaryStage.widthProperty());
-        backgroundImageView.fitHeightProperty().bind(primaryStage.heightProperty());
-        backgroundImageView.setEffect(new GaussianBlur(30));
+        Media backgroundMedia = new Media(videoUrl.toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(backgroundMedia);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setAutoPlay(true);
+
+        MediaView backgroundMediaView = new MediaView(mediaPlayer);
+        backgroundMediaView.setPreserveRatio(false);
+        backgroundMediaView.fitWidthProperty().bind(primaryStage.widthProperty());
+        backgroundMediaView.fitHeightProperty().bind(primaryStage.heightProperty());
+        backgroundMediaView.setEffect(new GaussianBlur(10)); // Apply blur effect to background
 
         // Initialize game components
         Referee referee = new Referee();
         GameBoardPanel gameBoardPanel = new GameBoardPanel();
         PlayerRackPanel playerRackPanel = new PlayerRackPanel(referee.players.get(0));
 
-        // TODO: Remplacer "Joueur 1", 10 et 5 par les vraies données dynamiques du joueur 1
         SideInfoPanel sideInfoPlayer1 = new SideInfoPanel("Joueur 1", 10, 5);
-
-        // TODO: Remplacer "Joueur 2", 8 et 3 par les vraies données dynamiques du joueur 2
         SideInfoPanel sideInfoPlayer2 = new SideInfoPanel("Joueur 2", 8, 3);
 
-        // Instancier la pioche
-        PoolView poolView = new PoolView();
-        poolView.setPrefSize(50, 50);
-
-        // Label joueur actuel
-        // TODO: Remplacer "Player 1" par le nom dynamique du joueur courant
+        // Current player label styling
         Label currentPlayerLabel = new Label("Player 1");
         currentPlayerLabel.setStyle(
             "-fx-font-size: 24px;" +
@@ -62,54 +59,96 @@ public class MainWindow extends Application {
         );
         currentPlayerLabel.setAlignment(Pos.CENTER);
 
-        // Largeur fixe pour la pioche + espace vide à droite
-        double sideWidth = 90; // ajuste selon la taille de ta pioche + marges
+        // Container for player's rack, centered vertically
+        VBox rackContainer = new VBox(playerRackPanel);
+        rackContainer.setAlignment(Pos.CENTER);
 
-        // Conteneur gauche : pioche avec largeur fixe, padding réduit à droite pour décaler vers la gauche
-        VBox leftBox = new VBox(poolView);
-        leftBox.setPrefWidth(sideWidth);
-        leftBox.setAlignment(Pos.CENTER_LEFT);
-        leftBox.setPadding(new Insets(0, 40, 0, 20)); // réduit la marge à droite (40 au lieu de 80)
-
-        // Conteneur droite : espace vide pour équilibrer la largeur, même largeur que la gauche
-        Region rightSpacer = new Region();
-        rightSpacer.setPrefWidth(sideWidth);
-
-        // Conteneur central : le rack avec label
-        VBox rackWithLabel = new VBox(25, currentPlayerLabel, playerRackPanel);
+        // Container combining player label and rack
+        VBox rackWithLabel = new VBox(25, currentPlayerLabel, rackContainer);
         rackWithLabel.setAlignment(Pos.TOP_CENTER);
 
-        // Conteneur horizontal global pour bottomContent avec padding modifié
-        HBox bottomContent = new HBox();
-        bottomContent.setPadding(new Insets(10, 130, 40, 0)); // padding droite = 40, gauche = 0, décale vers la gauche
+        // "End Turn" button with styling and hover effects
+        Button endTurnButton = new Button("Fin de Tour");
+        endTurnButton.setStyle(
+            "-fx-font-size: 16px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-background-color: linear-gradient(to bottom, #f2c94c, #c98b00);" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 24;" +
+            "-fx-border-radius: 24;" +
+            "-fx-border-color: #fff59d;" +
+            "-fx-border-width: 2;" +
+            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 0, 4);" +
+            "-fx-cursor: hand;"
+        );
+        endTurnButton.setPrefWidth(140);
+        endTurnButton.setPrefHeight(60);
+
+        endTurnButton.setOnMouseEntered(e -> {
+            endTurnButton.setStyle(
+                "-fx-font-size: 16px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-color: linear-gradient(to bottom, #f2d44f, #d9a400);" +
+                "-fx-text-fill: white;" +
+                "-fx-background-radius: 24;" +
+                "-fx-border-radius: 24;" +
+                "-fx-border-color: #fff59d;" +
+                "-fx-border-width: 2;" +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 14, 0, 0, 6);" +
+                "-fx-cursor: hand;"
+            );
+        });
+        endTurnButton.setOnMouseExited(e -> {
+            endTurnButton.setStyle(
+                "-fx-font-size: 16px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-color: linear-gradient(to bottom, #f2c94c, #c98b00);" +
+                "-fx-text-fill: white;" +
+                "-fx-background-radius: 24;" +
+                "-fx-border-radius: 24;" +
+                "-fx-border-color: #fff59d;" +
+                "-fx-border-width: 2;" +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 0, 4);" +
+                "-fx-cursor: hand;"
+            );
+        });
+
+        // Horizontal container for rack + button, vertically centered
+        HBox rackAndButton = new HBox(20, rackWithLabel, endTurnButton);
+        rackAndButton.setAlignment(Pos.CENTER);
+
+        // Adjust vertical position of the "End Turn" button
+        HBox.setMargin(endTurnButton, new Insets(55, 0, 0, 0));
+
+        // Bottom section container with padding to shift content right
+        HBox bottomContent = new HBox(rackAndButton);
+        bottomContent.setPadding(new Insets(0, 130, 170, 300)); // Left padding increased to shift right
         bottomContent.setAlignment(Pos.CENTER);
-        bottomContent.getChildren().addAll(leftBox, rackWithLabel, rightSpacer);
-        bottomContent.setSpacing(0);
 
-        // Construction de la racine principale
+        // Main layout setup
         BorderPane root = new BorderPane();
-
-        root.setTop(null);
 
         HBox boardWrapper = new HBox(gameBoardPanel);
         boardWrapper.setAlignment(Pos.CENTER);
         root.setCenter(boardWrapper);
-
         root.setBottom(bottomContent);
 
+        // Left side panel setup
         StackPane leftStack = new StackPane(sideInfoPlayer1);
         leftStack.setPrefWidth(300);
         leftStack.setAlignment(Pos.CENTER);
         BorderPane.setMargin(leftStack, new Insets(0, 10, 0, 140));
         root.setLeft(leftStack);
 
+        // Right side panel setup
         StackPane rightStack = new StackPane(sideInfoPlayer2);
         rightStack.setPrefWidth(300);
         rightStack.setAlignment(Pos.CENTER);
         BorderPane.setMargin(rightStack, new Insets(0, 140, 0, 10));
         root.setRight(rightStack);
 
-        StackPane mainContainer = new StackPane(backgroundImageView, root);
+        // Stack background video behind main UI
+        StackPane mainContainer = new StackPane(backgroundMediaView, root);
 
         Scene scene = new Scene(mainContainer);
         primaryStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
