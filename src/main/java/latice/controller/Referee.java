@@ -151,11 +151,30 @@ public class Referee {
     }
     
     public static void pointCalcul(Position position, Tile tile, Player player) {
-        if (isPlacementValid(position, tile)) {
+    	
+    	List<Position> neighbors = position.getNeighbors();
+    	int validNeighborsCount = 0;
+    	
         	if (GameBoard.getCell(position).getType()== CellType.SUN) {
         		player.addPoint(2); // Add 1 point for placing a tile on a SUN cell
         	}
-            switch (position.getNeighbors().size()) {
+        	
+
+
+        	for (Position neighbor : neighbors) {
+        	    if (GameBoard.cells.containsKey(neighbor)) {
+        	        Tile neighborTile = GameBoard.cells.get(neighbor).getTile();
+        	        if (neighborTile != null) {
+        	            // If same color or shape 
+        	            if (neighborTile.getColor().equals(tile.getColor()) || neighborTile.getShape().equals(tile.getShape())) {
+        	                validNeighborsCount++;
+        	            }
+        	        }
+        	    }
+        	}
+        	
+        	System.out.println(validNeighborsCount);
+            switch (validNeighborsCount) {
                 case 2:
                     // Two neighbors, 1 points
                     player.addPoint(1);
@@ -172,12 +191,13 @@ public class Referee {
                     // No neighbors or one neighbors, 0 points
                     break;
             }
-        } 
-    }
+        }
+
+  
 
     // Method to end the game and determine the winner(s)
     public void gameEnd() {
-    	//TODO
+    	
     }
     
     // Method to end the turn for the current player
