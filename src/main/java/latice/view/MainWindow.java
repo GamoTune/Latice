@@ -123,18 +123,20 @@ public class MainWindow extends Application {
         
         endTurnButton.setOnAction(e -> {
 			// End the turn for the current player
-			Referee.turnEnd();
-			// Update the current player label
-			currentPlayerLabel.setText(Referee.playersCycle.get(Referee.currentPlayerIndex).getName() + "'s Turn");
-			
-			// Update the side info panels for both players
-			sideInfoPlayer1.updateScore(Referee.playersCycle.get(0));
-			sideInfoPlayer1.updateCardsLeft(Referee.playersCycle.get(0));
-			sideInfoPlayer2.updateScore(Referee.playersCycle.get(1));
-			sideInfoPlayer2.updateCardsLeft(Referee.playersCycle.get(1));
-			
-			// Update the rack panel for the current player
-			playerRackPanel.displayRack(Referee.playersCycle.get(Referee.currentPlayerIndex));
+        	if (!Referee.gameOver) {
+				Referee.turnEnd();
+				// Update the current player label
+				currentPlayerLabel.setText(Referee.playersCycle.get(Referee.currentPlayerIndex).getName() + "'s Turn");
+				
+				// Update the side info panels for both players
+				sideInfoPlayer1.updateScore(Referee.playersCycle.get(0));
+				sideInfoPlayer1.updateCardsLeft(Referee.playersCycle.get(0));
+				sideInfoPlayer2.updateScore(Referee.playersCycle.get(1));
+				sideInfoPlayer2.updateCardsLeft(Referee.playersCycle.get(1));
+				
+				// Update the rack panel for the current player
+				playerRackPanel.displayRack(Referee.playersCycle.get(Referee.currentPlayerIndex));
+        	}
 
 		});
 

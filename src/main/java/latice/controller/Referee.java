@@ -238,8 +238,6 @@ public class Referee {
     		Player currentPlayer = choosePlayer();
     		if (!playersCycle.contains(currentPlayer)) {
 				playersCycle.add(currentPlayer);
-			} else {
-				continue; // If player already in the list, skip to next iteration
 			}
     	}
     }
